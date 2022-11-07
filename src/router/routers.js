@@ -122,6 +122,54 @@ export default [
           notCache: true
         },
         component: () => import('@/view/single-page/material-prepare')
+      },
+      {
+        path: '/work-production',
+        name: 'WorkProduction',
+        meta: {
+          // access: [1, 2, 3, 4, 5],
+          hideInMenu: true,
+          title: '作品生产',
+          notTab: true,
+          notCache: true
+        },
+        component: () => import('@/view/single-page/work-production')
+      },
+      {
+        path: '/work-review',
+        name: 'WorkReview',
+        meta: {
+          // access: [1, 2, 3, 4, 5],
+          hideInMenu: true,
+          title: '作品审核',
+          notTab: true,
+          notCache: true
+        },
+        component: () => import('@/view/single-page/work-review')
+      },
+      {
+        path: '/work-detail',
+        name: 'WorkDetail',
+        meta: {
+          // access: [1, 2, 3, 4, 5],
+          hideInMenu: true,
+          title: '待审核',
+          notTab: true,
+          notCache: true
+        },
+        component: () => import('@/view/single-page/work-review/workDetail.vue')
+      },
+      {
+        path: '/exhibition-evaluate',
+        name: 'ExhibitionEvaluate',
+        meta: {
+          // access: [1, 2, 3, 4, 5],
+          hideInMenu: true,
+          title: '作品展示与互评',
+          notTab: true,
+          notCache: true
+        },
+        component: () => import('@/view/single-page/exhibition-evaluate')
       }
     ]
   },
