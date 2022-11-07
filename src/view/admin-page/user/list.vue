@@ -1,6 +1,10 @@
 <template>
   <div>
-    <Table :columns="columns" :data="data"/>
+    <Table :columns="columns" :data="data">
+      <template slot-scope="{ row }" slot="level">
+        <strong>{{ getLevel(row.level) }}</strong>
+      </template>
+    </Table>
   </div>
 </template>
 <script>
@@ -15,7 +19,7 @@ export default {
         },
         {
           title: '等级',
-          key: 'level'
+          slot: 'level'
         }
       ],
       data: [],
@@ -32,8 +36,24 @@ export default {
   methods: {
     getList() {
       userList(this.params).then(res => {
-        console.log(res, 'res')
+        this.data = res.data.rows
       })
+    },
+    getLevel(key) {
+      switch (key) {
+        case 1:
+          return '管理员'
+        case 2:
+          return '教师'
+        case 3:
+          return ''
+        case 4:
+          return ''
+        case 5:
+          return '学生'
+        default:
+          break
+      }
     }
   }
 }
