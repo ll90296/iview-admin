@@ -33,7 +33,8 @@ export default {
     local: localRead('local'),
     errorList: [],
     hasReadErrorPage: false,
-    personalInfo: {}
+    personalInfo: {},
+    globalData: {}
   },
   getters: {
     menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access),
@@ -89,6 +90,9 @@ export default {
     },
     setPersonalInfo(state, personalInfo) {
       state.personalInfo = personalInfo
+    },
+    setGlobalData(state, data) {
+      state.globalData = { ...state.globalData, ...data }
     }
   },
   actions: {

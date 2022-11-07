@@ -87,7 +87,10 @@ export default {
       if (this.active === 0) {
         this.form.school = '新疆财经大学'
       }
-      this.form.type = this.active++
+      const form = {
+        ...this.form
+      }
+      form.type++
       beginExperiment(this.form).then(res => {
         this.$store.commit('setPersonalInfo', { type: this.active, ...this.form })
         this.$router.push({ name: 'practice' })

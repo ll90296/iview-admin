@@ -2,11 +2,11 @@
   <div class="ResourcesPrepare">
     <h1>1. 本次实践中需要使用到的软件</h1>
     <p>请选择处理音频的软件</p>
-    <ZCheckbox v-model="social" :list="list" class="check" />
+    <ZCheckbox v-model="social1" :list="list1" class="check" />
     <p>请选择处理图片的软件</p>
-    <ZCheckbox v-model="social" :list="list" class="check" />
+    <ZCheckbox v-model="social2" :list="list2" class="check" />
     <p>请选择处理视频的软件</p>
-    <ZCheckbox v-model="social" :list="list" class="check" />
+    <ZCheckbox v-model="social3" :list="list3" class="check" />
     <h1>2. 本次实践中需要使用到的硬件</h1>
     <p>计算机硬件配置要求：i7、2g 内存、4g 显存、1t 硬盘</p>
     <p>其他计算终端硬件配置要求：无</p>
@@ -14,9 +14,7 @@
       <router-link :to="{name:'topicSelection'}">
         <Button shape="circle">上一步</Button>
       </router-link>
-      <router-link :to="{name:'materialPrepare'}">
-        <Button type="primary" shape="circle">下一步</Button>
-      </router-link>
+      <Button type="primary" shape="circle" @click="routerLink">下一步</Button>
     </div>
   </div>
 </template>
@@ -30,16 +28,16 @@ export default {
   },
   data() {
     return {
-      social: [],
-      list: [{ url: require('@/assets/images/logo-min.jpg'), name: 1, id: 1 }, { url: require('@/assets/images/logo-min.jpg'), name: 2, id: 2 }, { url: require('@/assets/images/logo-min.jpg'), name: 3, id: 3 }, { url: require('@/assets/images/logo-min.jpg'), name: 4, id: 4 }],
+      social1: [],
+      social2: [],
+      social3: [],
+
+      list1: [{ url: require('@/assets/images/convert.png'), name: 'Convert', id: 1 }, { url: require('@/assets/images/au.png'), name: 'Au', id: 2 }, { url: require('@/assets/images/videomeld.png'), name: 'Video Meld', id: 3 }, { url: require('@/assets/images/x2proaudio.png'), name: 'X2Pro Audio', id: 4 }],
+      list2: [{ url: require('@/assets/images/ps.png'), name: 'Adobe Photoshop', id: 1 }, { url: require('@/assets/images/acdsee.png'), name: 'ACDSee', id: 2 }, { url: require('@/assets/images/picasa.png'), name: 'Picasa', id: 3 }, { url: require('@/assets/images/plxt.png'), name: '泼辣修图', id: 4 }],
+      list3: [{ url: require('@/assets/images/pr.png'), name: 'Premiere', id: 1 }, { url: require('@/assets/images/jy.png'), name: '剪映', id: 2 }, { url: require('@/assets/images/edius.png'), name: 'EDIUS', id: 3 }, { url: require('@/assets/images/finalcut.png'), name: 'Fianl cut', id: 4 }],
       active: '',
       form: {},
       submit: false
-    }
-  },
-  watch: {
-    social(newVal) {
-      console.log(newVal, 'vvv')
     }
   },
   mounted() {
@@ -47,7 +45,8 @@ export default {
   },
   methods: {
     routerLink() {
-      this.$router.push({ name: 'topicSelection' })
+      this.$store.commit('setGlobalData', { voice: this.social1.join('、'), picture: this.social2.join('、'), video: this.social3.join('、') })
+      this.$router.push({ name: 'materialPrepare' })
     },
     lookAnswer() {
       this.submit = true
@@ -83,7 +82,7 @@ export default {
       display: flex;
       justify-content: center;
       margin-top: 16px;
-      a:nth-of-type(2){
+      button{
         margin-left: 20px;
       }
     }

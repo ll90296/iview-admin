@@ -16,6 +16,9 @@ import TreeTable from 'tree-table-vue'
 import VOrgTree from 'v-org-tree'
 import 'v-org-tree/dist/v-org-tree.css'
 import '@icon-park/vue/styles/index.css'
+
+import 'tailwindcss/tailwind.css'
+
 import { install } from '@icon-park/vue/es/all'
 install(Vue, 'i')
 // 实际打包时应该不引入mock

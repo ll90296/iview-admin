@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3>开始实验</h3>
+    <h3 class="title">{{ testName }}</h3>
     <multipleChoiceOptions :item-list="itemList" v-model="active" :submit="submit" />
-    <Button v-if="page>=list.length" type="primary" shape="circle" style="width:140px;height:44px" @click="completeAnswer">完成答题</Button>
+    <Button v-if="okAnswer" type="primary" shape="circle" style="width:140px;height:44px" @click="completeAnswer">完成答题</Button>
     <Button v-else-if="submit" type="primary" shape="circle" style="width:140px;height:44px" @click="next">下一题</Button>
     <Button v-else :disabled="!active" type="primary" shape="circle" style="width:140px;height:44px" @click="lookAnswer">查看答案</Button>
 
@@ -33,15 +33,29 @@ export default {
       active: '',
       form: {},
       submit: false,
-      page: 0
+      page: 0,
+      testName: '',
+      okAnswer: false
     }
   },
   computed: {
     itemList() {
+      if (this.list.length === 0) return []
       if (!this.list[this.page]) {
-        return this.list[this.page - 1]
+        return this.list[this.page - 1].list
       }
-      return this.list[this.page]
+      return this.list[this.page].list
+    }
+  },
+  watch: {
+    list: {
+      deep: true,
+      immediate: true,
+      handler(newVal) {
+        if (newVal.length) {
+          this.testName = newVal[0].testName
+        }
+      }
     }
   },
   mounted() {
@@ -49,7 +63,11 @@ export default {
   },
   methods: {
     lookAnswer() {
-      this.page++
+      if (this.page === this.list.length - 1) {
+        this.okAnswer = true
+        this.submit = true
+        return
+      }
       this.submit = true
     },
     completeAnswer() {
@@ -57,6 +75,8 @@ export default {
     },
     next() {
       this.active = ''
+      this.page++
+      this.testName = this.list[this.page].testName
       this.submit = false
     }
   }
@@ -73,5 +93,11 @@ export default {
     h3{
       margin-bottom: 6px;
     }
+}
+.title{
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 17px;
 }
 </style>

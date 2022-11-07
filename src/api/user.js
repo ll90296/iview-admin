@@ -90,3 +90,10 @@ export const restoreTrash = msg_id => {
     }
   })
 }
+export const userList = params => {
+  return axios.request({
+    url: 'user/queryUserList',
+    method: 'get',
+    params
+  })
+}

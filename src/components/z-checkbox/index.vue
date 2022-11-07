@@ -4,14 +4,16 @@
       <div
         v-for="item in list"
         :key="item.id"
-        :style="{ background: social.includes(item.id) ? '#d9ffd1' : '' }"
+        :style="{ background: social.includes(item.name) ? '#d9ffd1' : '' }"
         class="ZCheckbox-item"
       >
         <div class="img-box">
           <img :src="item.url" alt="" >
         </div>
-        <span>{{ item.name }}</span>
-        <Checkbox :label="item.id" class="ZCheckbox-item-check">
+        <span
+          style="width: 84px;
+    display: inline-block;">{{ item.name }}</span>
+        <Checkbox :label="item.name" class="ZCheckbox-item-check">
           <span/>
         </Checkbox>
       </div>

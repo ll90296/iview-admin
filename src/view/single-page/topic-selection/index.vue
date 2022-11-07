@@ -6,12 +6,12 @@
       <div>
         <Card
           v-for="item in list"
-          :key="item.name"
-          :class="{active:item.name==active}"
+          :key="item.id"
+          :class="{active:item.id==active}"
           class="avoid"
           style="width:27vw;
         box-shadow: 0px 8px 15px 0px rgb(0 0 0 / 6%);"
-          @click.native="active = item.name">
+          @click.native="()=>{active = item.id;activeName = item.name}">
           <div style="text-align:center">
             <i-notebook-one :fill="['#333' ,'#2d6ac0' ,'#FFF' ,'#43CCF8']" theme="multi-color" size="88" class="icon"/>
             <h3>{{ item.name }}</h3>
@@ -28,12 +28,12 @@
     </div>
     <multipleChoice v-if="selectionActive == 1" :list="multipleList" class="boxShadow" @complete="updateActive(2)" />
     <div v-if="selectionActive == 2" class="boxShadow">
-      <Card class="hint-title" dis-hover>您选择了“经济类”新闻选题</Card>
+      <Card class="hint-title" dis-hover>您选择了“{{ activeName }}”新闻选题</Card>
       <h3
         style="margin-top: 62px;margin-bottom:20px;color: #333;
     font-size: 18px;
     font-weight: 600;">请为新闻选题拟定题目</h3>
-      <Input v-model="form.input2" style="width:558px;margin-bottom:20px" placeholder="在此处填写题目"></Input>
+      <Input v-model="form.title" style="width:558px;margin-bottom:20px" placeholder="在此处填写题目"></Input>
       <div>
         <Button type="primary" shape="circle" style="width:140px;height:44px" @click="routerLink">下一步</Button>
       </div>
@@ -42,43 +42,46 @@
 </template>
 
 <script>
-import multipleChoiceOptions from '@/components/multipleChoiceOptions'
 import multipleChoice from '@/components/multipleChoice'
+import { getTestList } from '@/api/practice'
 export default {
   name: 'TopicSelection',
   components: {
-    multipleChoiceOptions,
     multipleChoice
   },
   data() {
     return {
       list: [
-        { name: '政治类', content: '能反映基层党组织的工作动态、好经验、好做法，找亮点、挖特色、出经验，展现基层党组织基层党组织战斗堡垒作用；宣传共产党员典型先进事迹，弘扬正能量，彰显榜样力量；聚焦新疆儿女屯垦戍边、无私奉献，保家卫国、不怕牺牲，扎根天山、无怨无悔的大无畏革命精神及爱党、爱国、爱家乡的大义情怀。' },
-        { name: '生态类', content: '深入一线，在环保中展现国企责任与使命，报道环保科技人员科学研究环境保护取得的成绩、成果；报道新疆各区县践行环保理念，展现环保意识，开展的绿色行动。' },
-        { name: '经济类', content: '依托地理、资源、产业、政策等优势，报道新疆经济增长的新变化、新动力；展示新疆各市县“乡村振兴”战略的探索实践，展现“农业强、农村美、农民富”的动人图景；深度推进“旅游兴疆“战略，挖掘旅游的内涵与魅力，展现旅游新形象、新风采，营造出支持旅游、参与旅游、文明旅游的良好氛围。' },
-        { name: '文化类', content: '以中华优秀传统文化、革命文化、社会主义先进文化为支撑，宣传报道新疆各地开展“文化润疆“的具体实践，铸牢中华民族共同体意识。' },
-        { name: '社会类', content: '宣传报道各地各有关部门着力解决上学、就业、医保、养老等民生问题和人民群众普遍关心的突出问题，宣传党的惠民政策给百姓生活带来的巨大变化，展示人民群众的获得感、幸福感；挖掘身边民族团结人和事，凸显各族人民情同手足、勠力同心、并肩携手的社会氛围。' }
+        { name: '政治类', id: 1, content: '能反映基层党组织的工作动态、好经验、好做法，找亮点、挖特色、出经验，展现基层党组织基层党组织战斗堡垒作用；宣传共产党员典型先进事迹，弘扬正能量，彰显榜样力量；聚焦新疆儿女屯垦戍边、无私奉献，保家卫国、不怕牺牲，扎根天山、无怨无悔的大无畏革命精神及爱党、爱国、爱家乡的大义情怀。' },
+        { name: '生态类', id: 2, content: '深入一线，在环保中展现国企责任与使命，报道环保科技人员科学研究环境保护取得的成绩、成果；报道新疆各区县践行环保理念，展现环保意识，开展的绿色行动。' },
+        { name: '经济类', id: 3, content: '依托地理、资源、产业、政策等优势，报道新疆经济增长的新变化、新动力；展示新疆各市县“乡村振兴”战略的探索实践，展现“农业强、农村美、农民富”的动人图景；深度推进“旅游兴疆“战略，挖掘旅游的内涵与魅力，展现旅游新形象、新风采，营造出支持旅游、参与旅游、文明旅游的良好氛围。' },
+        { name: '文化类', id: 4, content: '以中华优秀传统文化、革命文化、社会主义先进文化为支撑，宣传报道新疆各地开展“文化润疆“的具体实践，铸牢中华民族共同体意识。' },
+        { name: '社会类', id: 5, content: '宣传报道各地各有关部门着力解决上学、就业、医保、养老等民生问题和人民群众普遍关心的突出问题，宣传党的惠民政策给百姓生活带来的巨大变化，展示人民群众的获得感、幸福感；挖掘身边民族团结人和事，凸显各族人民情同手足、勠力同心、并肩携手的社会氛围。' }
       ],
 
-      multipleList: [[
-        { id: 1, name: '新疆财经大学用户', answer: true },
-        { id: 2, name: '其他高校用户', answer: false },
-        { id: 3, name: '社会用户', answer: false }
-      ]],
+      multipleList: [],
       form: {},
       active: '',
+      activeName: '',
       selectionActive: 0
     }
   },
   mounted() {
     //
+    this.testList()
   },
   methods: {
     updateActive(i) {
       this.selectionActive = i
     },
     routerLink() {
+      this.$store.commit('setGlobalData', { choseSubject: this.active, ...this.form })
       this.$router.push({ name: 'resourcesPrepare' })
+    },
+    testList() {
+      getTestList().then(res => {
+        this.multipleList = res.data.rows
+      })
     }
   }
 }

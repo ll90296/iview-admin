@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Card v-for="item in itemList" :key="item.id" :class="{active:value==item.id,correct:correctError(item.answer),error: correctError(item.answer,item.id)}" class="item" @click.native="select(item.id)">
-      <p>{{ item.name }}</p><Icon v-if="correctError(item.answer)" type="md-checkmark" color="#0ec066" class="icon" />
-      <Icon v-if="correctError(item.answer,item.id)" type="md-close" color="#ff8e32" class="icon" />
+    <Card v-for="item in itemList" :key="item.id" :class="{active:value==item.id,correct:correctError(item.testOptionAnswer),error: correctError(item.testOptionAnswer,item.id)}" class="item" @click.native="select(item.id)">
+      <p>{{ item.testOptionEx }}</p><Icon v-if="correctError(item.testOptionAnswer)" type="md-checkmark" color="#0ec066" class="icon" />
+      <Icon v-if="correctError(item.testOptionAnswer,item.id)" type="md-close" color="#ff8e32" class="icon" />
     </Card>
   </div>
 </template>
@@ -36,6 +36,7 @@ export default {
     },
     select(id) {
       if (this.submit) return
+      console.log(id, 'id')
       this.$emit('input', id)
     }
   }

@@ -1,7 +1,6 @@
 <template>
   <div class="practice">
     <Card class="hint-title" dis-hover>正式开始实验前，请先进行课前练习，巩固本次实验知识点</Card>
-    <h3>开始实验</h3>
     <multipleChoice :list="list" @complete="routerLink" />
   </div>
 </template>
@@ -10,8 +9,8 @@
 import InforCard from '_c/info-card'
 import CountTo from '_c/count-to'
 import { ChartPie, ChartBar } from '_c/charts'
-import multipleChoiceOptions from '@/components/multipleChoiceOptions'
 import multipleChoice from '@/components/multipleChoice'
+import { getTestList } from '@/api/practice'
 export default {
   name: 'Practice',
   components: {
@@ -19,20 +18,11 @@ export default {
     CountTo,
     ChartPie,
     ChartBar,
-    multipleChoiceOptions,
     multipleChoice
   },
   data() {
     return {
-      list: [[
-        { id: 1, name: '新疆财经大学用户', answer: true },
-        { id: 2, name: '其他高校用户', answer: false },
-        { id: 3, name: '社会用户', answer: false }
-      ], [
-        { id: 1, name: '新疆财经大学用户', answer: true },
-        { id: 2, name: '其他高校用户', answer: false },
-        { id: 3, name: '社会用户', answer: false }
-      ]],
+      list: [],
       active: '',
       form: {},
       submit: false
@@ -45,6 +35,7 @@ export default {
   },
   mounted() {
     //
+    this.testList()
   },
   methods: {
     routerLink() {
@@ -56,6 +47,11 @@ export default {
     next() {
       this.active = ''
       this.submit = false
+    },
+    testList() {
+      getTestList().then(res => {
+        this.list = res.data.rows
+      })
     }
   }
 }
@@ -72,6 +68,7 @@ export default {
     border-radius: 12px;
     border: 1px solid #b3e7ff;
     opacity: 0.98;
+    margin-bottom: 32px;
 }
 ::v-deep .ivu-icon-md-close:before,
 ::v-deep .ivu-icon-md-checkmark:before{

@@ -1,13 +1,13 @@
 import {
   login,
   logout,
-  getUserInfo,
+  // getUserInfo,
   getMessage,
   getContentByMsgId,
   hasRead,
   removeReaded,
-  restoreTrash,
-  getUnreadCount
+  restoreTrash
+  // getUnreadCount
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
 
@@ -17,7 +17,7 @@ export default {
     userId: '',
     avatarImgPath: '',
     token: getToken(),
-    access: '',
+    access: localStorage.getItem('access') ? JSON.parse(localStorage.getItem('access')) : [],
     hasGetInfo: false,
     unreadCount: 0,
     messageUnreadList: [],
@@ -36,6 +36,7 @@ export default {
       state.userName = name
     },
     setAccess(state, access) {
+      localStorage.setItem('access', JSON.stringify(access))
       state.access = access
     },
     setToken(state, token) {
@@ -83,7 +84,7 @@ export default {
         }).then(res => {
           const data = res.data.data
           commit('setToken', data.token)
-          commit('setAccess', data.level)
+          commit('setAccess', [data.level])
           resolve()
         }).catch(err => {
           reject(err)
@@ -107,31 +108,31 @@ export default {
       })
     },
     // 获取用户相关信息
-    getUserInfo({ state, commit }) {
-      return new Promise((resolve, reject) => {
-        try {
-          getUserInfo(state.token).then(res => {
-            const data = res.data
-            commit('setAvatar', data.avatar)
-            commit('setUserName', data.name)
-            commit('setUserId', data.user_id)
-            commit('setAccess', data.access)
-            commit('setHasGetInfo', true)
-            resolve(data)
-          }).catch(err => {
-            reject(err)
-          })
-        } catch (error) {
-          reject(error)
-        }
-      })
-    },
+    // getUserInfo({ state, commit }) {
+    //   return new Promise((resolve, reject) => {
+    //     try {
+    //       getUserInfo(state.token).then(res => {
+    //         const data = res.data
+    //         commit('setAvatar', data.avatar)
+    //         commit('setUserName', data.name)
+    //         commit('setUserId', data.user_id)
+    //         commit('setAccess', data.access)
+    //         commit('setHasGetInfo', true)
+    //         resolve(data)
+    //       }).catch(err => {
+    //         reject(err)
+    //       })
+    //     } catch (error) {
+    //       reject(error)
+    //     }
+    //   })
+    // },
     // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
     getUnreadMessageCount({ state, commit }) {
-      getUnreadCount().then(res => {
-        const { data } = res
-        commit('setMessageCount', data)
-      })
+      // getUnreadCount().then(res => {
+      //   const { data } = res
+      //   commit('setMessageCount', data)
+      // })
     },
     // 获取消息列表，其中包含未读、已读、回收站三个列表
     getMessageList({ state, commit }) {

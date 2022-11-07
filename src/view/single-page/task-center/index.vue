@@ -8,44 +8,14 @@
 </template>
 
 <script>
-import multipleChoiceOptions from '@/components/multipleChoiceOptions'
-import multipleChoice from '@/components/multipleChoice'
 export default {
-  name: 'TopicSelection',
-  components: {
-    multipleChoiceOptions,
-    multipleChoice
-  },
-  data() {
-    return {
-      list: [
-        { id: 1, name: '新疆财经大学用户', answer: true },
-        { id: 2, name: '其他高校用户', answer: false },
-        { id: 3, name: '社会用户', answer: false }
-      ],
-      active: '',
-      form: {},
-      submit: false
-    }
-  },
-  watch: {
-    active(newVal) {
-      console.log(newVal, 'vvv')
-    }
-  },
+  name: 'TaskCenter',
   mounted() {
     //
   },
   methods: {
     routerLink() {
       this.$router.push({ name: 'topicSelection' })
-    },
-    lookAnswer() {
-      this.submit = true
-    },
-    next() {
-      this.active = ''
-      this.submit = false
     }
   }
 }

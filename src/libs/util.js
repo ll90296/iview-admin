@@ -177,7 +177,6 @@ export const canTurnTo = (name, access, routes) => {
       }
     })
   }
-
   return routePermissionJudge(routes)
 }
 
