@@ -97,3 +97,10 @@ export const userList = params => {
     params
   })
 }
+export const updateLevel = data => {
+  return axios.request({
+    url: '/user/updateLevel',
+    method: 'post',
+    data
+  })
+}

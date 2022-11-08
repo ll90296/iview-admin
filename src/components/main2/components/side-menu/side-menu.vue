@@ -5,7 +5,7 @@
       <template v-for="item in menuList">
         <template v-if="item.children && item.children.length === 1">
           <side-menu-item v-if="showChildren(item)" :key="`menu-${item.name}`" :parent-item="item"/>
-          <menu-item v-else :name="getNameOrHref(item, true)" :key="`menu-${item.children[0].name}`"><common-icon :type="item.children[0].icon || ''"/><span>{{ item.children[0].meta.title }}</span></menu-item>
+          <menu-item v-else :name="getNameOrHref(item, true)" :key="`menu-${item.children[0].meta.title}`"><common-icon :type="item.children[0].icon || ''"/><span>{{ item.children[0].meta.title }}</span></menu-item>
         </template>
         <template v-else>
           <side-menu-item v-if="showChildren(item)" :key="`menu-${item.name}`" :parent-item="item"/>

@@ -218,6 +218,39 @@ export default [
       }
     ]
   },
+  {
+    path: '/basic-data',
+    name: 'basicData',
+    component: Main2,
+    meta: {
+      icon: 'logo-buffer',
+      title: '基础资料'
+    },
+    children: [
+      {
+        path: 'material-upload',
+        name: 'MaterialUpload',
+        meta: {
+          access: [1, 2, 4],
+          icon: 'logo-buffer',
+          title: '素材上传',
+          notCache: true
+        },
+        component: () => import('@/view/admin-page/material-upload/index.vue')
+      },
+      {
+        path: 'manuscripts-upload',
+        name: 'manuscriptsUpload',
+        meta: {
+          access: [1, 2, 4],
+          icon: 'logo-buffer',
+          title: '文稿上传',
+          notCache: true
+        },
+        component: () => import('@/view/admin-page/manuscripts-upload/index.vue')
+      }
+    ]
+  },
   // {
   //   path: '/update',
   //   name: 'update',

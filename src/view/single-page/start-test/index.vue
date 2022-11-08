@@ -140,4 +140,7 @@ export default {
     padding-left: 15px;
   }
 }
+img{
+  display: inline-block;
+}
 </style>

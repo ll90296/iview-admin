@@ -4,9 +4,11 @@
     <h1>请从下面的图片和视频素材库中挑选合适的素材，注意不要选择不符合新闻作品生产的劣质素材。</h1>
     <h3>图片素材库</h3>
     <ZCheckbox v-model="social" :list="list" class="check" />
-    <p>请选择处理图片的软件</p>
+    <h3>视频素材库</h3>
     <ZCheckbox v-model="social" :list="list" class="check" />
-    <p>请选择处理视频的软件</p>
+    <h3>音频素材库</h3>
+    <ZCheckbox v-model="social" :list="list" class="check" />
+    <h3>文稿素材库</h3>
     <ZCheckbox v-model="social" :list="list" class="check" />
     <h1>2. 本次实践中需要使用到的硬件</h1>
     <p>计算机硬件配置要求：i7、2g 内存、4g 显存、1t 硬盘</p>
@@ -59,10 +61,16 @@ export default {
 
 <style lang="less" scoped>
 .MaterialPrepare{
-    padding: 36px 60px;
+    padding: 36px 85px;
     background: #fff;
     border: 1px solid #eaedf3;
     border-radius: 8px;
+    h3{
+      color: #333;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
     h1{
       color: #333;
       font-size: 20px;
@@ -71,9 +79,6 @@ export default {
     }
     h1:nth-of-type(2){
         margin-bottom: 30px;
-    }
-    h3{
-      margin-bottom: 12px;
     }
     .check{
       padding-left: 40px;

@@ -13,9 +13,11 @@
         :lg="6"
         :key="item.title"
         style="margin-bottom: 20px;">
-        <Card
-          style="display: flex;
+        <router-link :to="{name:item.route}">
+          <Card
+            style="display: flex;
     justify-content: center;"> <p>{{ item.title }}</p></Card>
+        </router-link>
       </i-col>
     </Row>
   </div>
@@ -54,7 +56,8 @@ export default {
           title: '素材准备',
           icon: 'md-chatbubbles',
           count: 12,
-          color: '#E46CBB'
+          color: '#E46CBB',
+          route: 'materialPrepare'
         },
         { title: '作品生产', icon: 'md-map', count: 14, color: '#9A66E4' },
         { title: '作品审核', icon: 'md-map', count: 14, color: '#9A66E4' },

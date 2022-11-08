@@ -17,6 +17,9 @@ import VOrgTree from 'v-org-tree'
 import 'v-org-tree/dist/v-org-tree.css'
 import '@icon-park/vue/styles/index.css'
 
+import Pagination from '@/components/Pagination/index.js'
+Vue.use(Pagination)
+
 import 'tailwindcss/tailwind.css'
 
 import { install } from '@icon-park/vue/es/all'

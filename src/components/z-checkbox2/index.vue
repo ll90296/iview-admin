@@ -1,26 +1,24 @@
 <template>
   <div class="ZCheckbox">
-    <CheckboxGroup
-      v-model="social"
-      style="display: flex">
-      <Row gutter="16">
+    <CheckboxGroup v-model="social" style="display: flex">
+      <Row :gutter="16" style="width:100%">
         <Col
           v-for="item in list"
           :key="item.id"
           :style="{ background: social.includes(item.id) ? '#d9ffd1' : '' }"
-          span="6"
-          class="ZCheckbox-item">
+          :xs="12"
+          :sm="8"
+          :md="6"
+          :lg="4"
+          class="ZCheckbox-item"
+        >
         <div>
           <div class="img-box">
-            <img
-              :src="item.url"
-              alt="" >
+            <img :src="item.url" alt="" >
           </div>
           <span>{{ item.name }}</span>
-          <Checkbox
-            :label="item.id"
-            class="ZCheckbox-item-check">
-            <span/>
+          <Checkbox :label="item.id" class="ZCheckbox-item-check">
+            <span />
           </Checkbox>
         </div>
         </Col>
@@ -71,9 +69,17 @@ export default {
       border: 1px solid #eee;
       margin-bottom: 8px;
       background: #fff;
+      width: 100%;
+      padding-top: 66.66%;
+      position: relative;
       img {
-        width: 58px;
-        height: 58px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
       }
     }
     &-check {
