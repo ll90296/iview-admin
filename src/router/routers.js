@@ -170,6 +170,18 @@ export default [
           notCache: true
         },
         component: () => import('@/view/single-page/exhibition-evaluate')
+      },
+      {
+        path: '/download-report',
+        name: 'DownloadReport',
+        meta: {
+          // access: [1, 2, 3, 4, 5],
+          hideInMenu: true,
+          title: '实验报告',
+          notTab: true,
+          notCache: true
+        },
+        component: () => import('@/view/single-page/download-report')
       }
     ]
   },
