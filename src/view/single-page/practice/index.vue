@@ -1,6 +1,6 @@
 <template>
   <div class="practice">
-    <Card class="hint-title" dis-hover>正式开始实验前，请先进行课前练习，巩固本次实验知识点</Card>
+    <Card class="hint-title" dis-hover>正式开始实验前，请先进行实验准备，巩固本次实验知识点</Card>
     <multipleChoice :list="list" @complete="routerLink" />
   </div>
 </template>

@@ -69,7 +69,7 @@ export default [
         meta: {
           // access: [1, 2, 3, 4, 5],
           hideInMenu: true,
-          title: '课前练习',
+          title: '实验准备',
           notTab: true,
           notCache: true
         },
@@ -81,7 +81,7 @@ export default [
         meta: {
           // access: [1, 2, 3, 4, 5],
           hideInMenu: true,
-          title: '任务中心',
+          title: '任务分发',
           notTab: true,
           notCache: true
         },
@@ -93,7 +93,7 @@ export default [
         meta: {
           // access: [1, 2, 3, 4, 5],
           hideInMenu: true,
-          title: '选题上报',
+          title: '选题策划',
           notTab: true,
           notCache: true
         },
@@ -129,7 +129,7 @@ export default [
         meta: {
           // access: [1, 2, 3, 4, 5],
           hideInMenu: true,
-          title: '作品生产',
+          title: '内容生产',
           notTab: true,
           notCache: true
         },
@@ -141,7 +141,7 @@ export default [
         meta: {
           // access: [1, 2, 3, 4, 5],
           hideInMenu: true,
-          title: '作品审核',
+          title: '内容审核',
           notTab: true,
           notCache: true
         },
@@ -165,7 +165,7 @@ export default [
         meta: {
           // access: [1, 2, 3, 4, 5],
           hideInMenu: true,
-          title: '作品展示与互评',
+          title: '展示与评价',
           notTab: true,
           notCache: true
         },
@@ -289,7 +289,7 @@ export default [
         meta: {
           access: [1, 2],
           icon: 'logo-buffer',
-          title: '作品审核',
+          title: '内容审核',
           notCache: true,
           hideInMenu: true
         },

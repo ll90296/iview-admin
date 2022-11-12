@@ -53,16 +53,16 @@ export default {
     return {
       inforCardData: [
         {
-          title: '课前练习',
+          title: '实验准备',
           icon: 'md-person-add',
           count: 803,
           color: '#2d8cf0',
           route: 'practice'
         },
-        { title: '任务中心', icon: 'md-locate', count: 232, color: '#19be6b',
+        { title: '任务分发', icon: 'md-locate', count: 232, color: '#19be6b',
           route: 'taskCenter' },
         {
-          title: '选题上报',
+          title: '选题策划',
           icon: 'md-help-circle',
           count: 142,
           color: '#ff9900',
@@ -77,11 +77,11 @@ export default {
           color: '#E46CBB',
           route: 'materialPrepare'
         },
-        { title: '作品生产', icon: 'md-map', count: 14, color: '#9A66E4',
+        { title: '内容生产', icon: 'md-map', count: 14, color: '#9A66E4',
           route: 'WorkProduction' },
-        { title: '作品审核', icon: 'md-map', count: 14, color: '#9A66E4',
+        { title: '内容审核', icon: 'md-map', count: 14, color: '#9A66E4',
           route: 'WorkReview' },
-        { title: '作品展示与互评', icon: 'md-map', count: 14, color: '#9A66E4',
+        { title: '展示与评价', icon: 'md-map', count: 14, color: '#9A66E4',
           route: 'ExhibitionEvaluate' }
       ],
       pieData: [

@@ -324,28 +324,29 @@ export default {
       console.log(this.form.oneEx, 'this.form.oneEx')
     },
     submit() {
-      console.log(
-        this.$store.state.app.globalData,
-        'this.$store.state.app.globalData'
-      )
-      const form = {
-        status: 0,
-        distribute: this.distribute.join(','),
-        userName: this.$store.state.user.userName,
-        releaseTime: new Date().Format('yyyy-MM-dd hh:mm:ss'),
-        ...this.form
+      try {
+        const form = {
+          status: 0,
+          distribute: this.distribute.join(','),
+          userName: this.$store.state.user.userName,
+          releaseTime: new Date().Format('yyyy-MM-dd hh:mm:ss'),
+          ...this.form,
+          ...this.$store.state.app.globalData
+        }
+        form.oneEx = form.oneEx.id
+        form.twoEx = form.twoEx.id
+        form.threeEx = form.threeEx.id
+        form.fourEx = form.fourEx.id
+        form.cover = form.cover.id
+
+        subjectTestSubmit(form).then(res => {
+          this.$store.commit('setPersonalInfo', {})
+          sessionStorage.removeItem('personalInfo')
+          this.$router.push({ name: 'WorkReview' })
+        })
+      } catch (error) {
+        this.$Message.error('请补全作品！')
       }
-      form.oneEx = form.oneEx.id
-      form.twoEx = form.twoEx.id
-      form.threeEx = form.threeEx.id
-      form.fourEx = form.fourEx.id
-      form.cover = form.cover.id
-      console.log(form, 'this.form')
-      subjectTestSubmit(form).then(res => {
-        this.$store.commit('setPersonalInfo', {})
-        sessionStorage.removeItem('personalInfo')
-        this.$router.push({ name: 'WorkReview' })
-      })
     }
   }
 }
