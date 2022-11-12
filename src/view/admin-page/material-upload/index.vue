@@ -9,6 +9,7 @@
           :headers="headers"
           :show-upload-list="false"
           :on-success="success"
+          accept="image/*"
           multiple
           type="drag"
         >
@@ -25,6 +26,7 @@
           :headers="headers"
           :show-upload-list="false"
           :on-success="success"
+          accept="video/*"
           multiple
           type="drag"
         >
@@ -41,6 +43,7 @@
           :headers="headers"
           :show-upload-list="false"
           :on-success="success"
+          accept="audio/*"
           multiple
           type="drag"
         >
@@ -75,18 +78,18 @@
       class="check"
     />
     <h3>音频素材库</h3>
-    <!-- <Row :gutter="16" type="flex" justify="start" class="code-row-bg m-20">
-      <Col v-for="item in audioList" :key="item.id" span="2">
+    <Row :gutter="16" type="flex" justify="start" class="code-row-bg m-20">
+      <Col v-for="item in audioList" :key="item.id" span="2" @click.native="openFile(item)">
       <img
         class="rounded"
         src="https://event.itouchtv.cn/laboratory/images/audio-icon9f9b08e4.png"
         alt=""
       >
       <p class="text-sm font-bold text-center" style="font-size: 14px">
-        image-demo.mp3
+        {{ item.fileName }}
       </p></Col
       >
-    </Row> -->
+    </Row>
     <h3>文稿素材库</h3>
     <div>
       <Row :gutter="16" type="flex" justify="start" class="code-row-bg">
@@ -99,6 +102,14 @@
         >
       </Row>
     </div>
+    <Modal
+      :footer-hide="true"
+      v-model="showFile"
+      :title="showUrlForm.fileName">
+      <div v-if="showFile">
+        <audio :src="$imgUrl(showUrlForm.url)" style="width:100%" controls autoplay />
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -116,7 +127,9 @@ export default {
       social1: [],
       social2: [],
       fileList: [],
-      text: ''
+      text: '',
+      showUrlForm: {},
+      showFile: false
     }
   },
   computed: {
@@ -157,6 +170,10 @@ export default {
       uploadManuscripts({ url: this.text }).then(res => {
         this.getQueryFiles()
       })
+    },
+    openFile(item) {
+      this.showUrlForm = item
+      this.showFile = true
     }
   }
 }

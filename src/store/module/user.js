@@ -13,7 +13,7 @@ import { setToken, getToken } from '@/libs/util'
 
 export default {
   state: {
-    userName: '',
+    userName: localStorage.getItem('userName'),
     userId: '',
     avatarImgPath: '',
     token: getToken(),
@@ -33,6 +33,7 @@ export default {
       state.userId = id
     },
     setUserName(state, name) {
+      localStorage.setItem('userName', name)
       state.userName = name
     },
     setAccess(state, access) {

@@ -12,7 +12,7 @@
     <ZCheckbox v-model="social2" :show-play="true" :list="videoList" class="check" />
     <h3>音频素材库</h3>
     <Row :gutter="16" type="flex" justify="start" class="code-row-bg m-20">
-      <Col v-for="item in audioList" :key="item.id" span="2" @click="openFile(item)">
+      <Col v-for="item in audioList" :key="item.id" span="2" @click.native="openFile(item)">
       <img
         class="rounded"
         src="https://event.itouchtv.cn/laboratory/images/audio-icon9f9b08e4.png"
