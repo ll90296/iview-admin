@@ -34,7 +34,6 @@
         </FormItem>
       </Form>
     </Modal>
-    {{ content }}
   </div>
 </template>
 <script>
@@ -67,8 +66,7 @@ export default {
         level: ''
       },
       ruleform: {},
-      modal1: false,
-      content: ''
+      modal1: false
     }
   },
   watch: {
@@ -82,13 +80,6 @@ export default {
   },
   mounted() {
     this.getList()
-    const str = 'Your Portal To The New,Open Internet.'
-    let index = 0
-    const interval = setInterval(() => {
-      if (!str[index]) return clearInterval(interval)
-      this.content += str[index]
-      index++
-    }, 100)
   },
   methods: {
     getList() {

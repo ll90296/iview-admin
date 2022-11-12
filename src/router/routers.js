@@ -199,7 +199,7 @@ export default [
         path: '/admin/home',
         name: 'adminHome',
         meta: {
-          access: [1, 2, 4],
+          access: [1, 2],
           hideInMenu: true,
           title: '首页',
           notCache: true
@@ -221,7 +221,7 @@ export default [
         path: 'user',
         name: 'user',
         meta: {
-          access: [1, 2, 4],
+          access: [1],
           icon: 'logo-buffer',
           title: '用户列表',
           notCache: true
@@ -243,7 +243,7 @@ export default [
         path: 'material-upload',
         name: 'MaterialUpload',
         meta: {
-          access: [1, 2, 4],
+          access: [1, 2],
           icon: 'logo-buffer',
           title: '素材上传',
           notCache: true
@@ -254,12 +254,46 @@ export default [
         path: 'question-bank',
         name: 'questionBank',
         meta: {
-          access: [1, 2, 4],
+          access: [1, 2],
           icon: 'logo-buffer',
           title: '题库',
           notCache: true
         },
         component: () => import('@/view/admin-page/question-bank/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/work-menu',
+    name: 'workMenu',
+    component: Main2,
+    meta: {
+      icon: 'logo-buffer',
+      title: '作品管理'
+    },
+    children: [
+      {
+        path: 'audit',
+        name: 'audit',
+        meta: {
+          access: [1, 2],
+          icon: 'logo-buffer',
+          title: '作品列表',
+          notCache: true
+        },
+        component: () => import('@/view/admin-page/audit/index.vue')
+      },
+      {
+        path: 'audit-detail',
+        name: 'auditDetail',
+        meta: {
+          access: [1, 2],
+          icon: 'logo-buffer',
+          title: '作品审核',
+          notCache: true,
+          hideInMenu: true
+        },
+        component: () => import('@/view/admin-page/audit/detail.vue')
       }
     ]
   },

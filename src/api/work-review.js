@@ -43,3 +43,17 @@ export const createComment = (data) => {
     data
   })
 }
+export const updateAudit = (params) => {
+  return axios.request({
+    url: 'subjectTest/auditStaus',
+    method: 'get',
+    params
+  })
+}
+export const gradeScore = (data) => {
+  return axios.request({
+    url: '/files/gradeScore',
+    method: 'post',
+    data
+  })
+}

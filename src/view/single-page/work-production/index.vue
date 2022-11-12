@@ -335,11 +335,11 @@ export default {
         releaseTime: new Date().Format('yyyy-MM-dd hh:mm:ss'),
         ...this.form
       }
-      // form.oneEx = form.oneEx.id
-      // form.twoEx = form.twoEx.id
-      // form.threeEx = form.threeEx.id
-      // form.fourEx = form.fourEx.id
-      // form.cover = form.cover.id
+      form.oneEx = form.oneEx.id
+      form.twoEx = form.twoEx.id
+      form.threeEx = form.threeEx.id
+      form.fourEx = form.fourEx.id
+      form.cover = form.cover.id
       console.log(form, 'this.form')
       subjectTestSubmit(form).then(res => {
         this.$router.push({ name: 'WorkReview' })
