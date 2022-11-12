@@ -26,17 +26,17 @@
       </Header>
       <div class="bread">
         <Breadcrumb v-if="$route.name != 'home'" style="padding:28px 120px">
-          <BreadcrumbItem to="/">首页</BreadcrumbItem>
+          <BreadcrumbItem @click.native="toHome">首页</BreadcrumbItem>
           <BreadcrumbItem >{{ $route.meta.title }}</BreadcrumbItem>
         </Breadcrumb>
-        <div v-if="$route.name == 'practice'">
+        <div v-if="form.name">
           <div v-if="!onOff" class="personal-info" style="position:relative" @click="onOff = !onOff">
             <div class="personal-info-left">
               <i-book-one :fill="['#333' ,'#2d6ac0' ,'#FFF' ,'#43CCF8']" theme="multi-color" size="24"/>
-              <span style="margin-left: 15px;">社会人士</span>
+              <span style="margin-left: 15px;">{{ form.type === 0 ?'新疆财经大学':form.type === 1?form.school:'社会人士' }}</span>
             </div>
             <div v-if="!onOff">
-              12354
+              {{ form.name }}
               <Icon type="ios-arrow-dropdown" style="padding-left:10px" />
             </div>
           </div>
@@ -47,26 +47,21 @@
                 <span style="margin-left: 15px;">个人信息</span>
               </p>
               <div>
-                <div>
-                  <h5>姓名：</h5>
-                  <p>123</p>
-                </div>
                 <div class="bottom10">
-                  <h5>学校：</h5>
-                  <p>123</p>
-                  <h5>学院：</h5>
-                  <p>123</p>
-                  <h5>班级：</h5>
-                  <p>123</p>
-                  <h5>姓名：</h5>
-                  <p>123</p>
-                  <h5>指定老师：</h5>
-                  <p>123</p>
+                  <h5 v-if="form.school">学校：</h5>
+                  <p v-if="form.school">{{ form.school }}</p>
+                  <h5 v-if="form.college">学院：</h5>
+                  <p v-if="form.college">{{ form.college }}</p>
+                  <h5 v-if="form.sclass">班级：</h5>
+                  <p v-if="form.sclass">{{ form.sclass }}</p>
+                  <h5 v-if="form.name">姓名：</h5>
+                  <p v-if="form.name">{{ form.name }}</p>
+                  <h5 v-if="form.teacher">指定老师：</h5>
+                  <p v-if="form.teacher">{{ form.teacher }}</p>
                 </div>
                 <div style="text-align:center">
-                  <router-link to="/">
-                    <Button type="error" shape="circle" style="width:184px;height:44px;margin-top:20px">结束本次实验</Button>
-                  </router-link>
+                  <Button type="error" shape="circle" style="width:184px;height:44px;margin-top:20px" @click="routerLink">结束本次实验</Button>
+
                 </div>
               </div>
               <a slot="extra" href="#" @click.prevent="onOff = !onOff">
@@ -98,6 +93,7 @@
               :right="50"
               container=".content-wrapper"
             />
+            {{ form.name }}
           </Content>
         </Layout>
       </Content>
@@ -171,6 +167,9 @@ export default {
     },
     unreadCount() {
       return this.$store.state.user.unreadCount
+    },
+    form() {
+      return this.$store.state.app.personalInfo
     }
   },
   watch: {
@@ -206,6 +205,38 @@ export default {
     }
   },
   methods: {
+    toHome() {
+      if (this.$store.state.app.personalInfo.name) {
+        this.$Modal.confirm({
+          content: '结束实验并返回实验平台首页？',
+          width: '416',
+          onOk: () => {
+            this.$store.commit('setPersonalInfo', {})
+            sessionStorage.removeItem('personalInfo')
+            this.$router.push('/')
+          },
+          onCancel: () => {
+
+          }
+        })
+      } else {
+        this.$router.push('/')
+      }
+    },
+    routerLink() {
+      this.$Modal.confirm({
+        content: '结束实验并返回实验平台首页？',
+        width: '416',
+        onOk: () => {
+          this.$store.commit('setPersonalInfo', {})
+          sessionStorage.removeItem('personalInfo')
+          this.$router.push('/')
+        },
+        onCancel: () => {
+
+        }
+      })
+    },
     ...mapMutations([
       'setBreadCrumb',
       'setTagNavList',
@@ -298,5 +329,11 @@ export default {
 }
 ::v-deep .ivu-layout{
   background: #fff !important;
+}
+::v-deep .ivu-modal-wrap{
+
+.ivu-modal{
+  width:416px !important;
+}
 }
 </style>

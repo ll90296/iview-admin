@@ -75,6 +75,9 @@ export default {
       this.selectionActive = i
     },
     routerLink() {
+      if (!this.form.title) {
+        return this.$Message.warning('请为新闻选题拟定题目')
+      }
       this.$store.commit('setGlobalData', { choseSubject: this.active, ...this.form })
       this.$router.push({ name: 'resourcesPrepare' })
     },

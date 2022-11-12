@@ -2,6 +2,7 @@
   <div class="dialog">
     <Modal
       v-model="addData"
+      width="800"
       style="width: 800px !important"
       title="选择素材"
       class-name="vertical-center-modal"

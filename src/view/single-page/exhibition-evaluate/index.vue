@@ -39,7 +39,7 @@
               <template slot="comment" slot-scope="{ row}">
                 <div class="comment">
                   <p class="comment">
-                    {{ row.comment }}
+                    {{ row.count }}条
                   </p>
                 </div>
               </template>

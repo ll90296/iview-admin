@@ -33,7 +33,7 @@ export default {
     local: localRead('local'),
     errorList: [],
     hasReadErrorPage: false,
-    personalInfo: {},
+    personalInfo: JSON.parse(sessionStorage.getItem('personalInfo')) || {},
     globalData: {}
   },
   getters: {
@@ -89,6 +89,7 @@ export default {
       state.hasReadErrorPage = status
     },
     setPersonalInfo(state, personalInfo) {
+      sessionStorage.setItem('personalInfo', JSON.stringify(personalInfo))
       state.personalInfo = personalInfo
     },
     setGlobalData(state, data) {

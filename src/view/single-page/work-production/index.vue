@@ -342,6 +342,8 @@ export default {
       form.cover = form.cover.id
       console.log(form, 'this.form')
       subjectTestSubmit(form).then(res => {
+        this.$store.commit('setPersonalInfo', {})
+        sessionStorage.removeItem('personalInfo')
         this.$router.push({ name: 'WorkReview' })
       })
     }

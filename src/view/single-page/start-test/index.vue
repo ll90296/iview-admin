@@ -1,8 +1,14 @@
 <template>
   <div class="start-test">
-    <h3>您好！欢迎使用新疆财经大学融合创新新闻作品虚拟仿真实验平台。</h3>
+    <h3
+      style="color: #333;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;">您好！欢迎使用新疆财经大学融合创新新闻作品虚拟仿真实验平台。</h3>
     <p>请填写下方信息，并按照平台指引完成实验，下方信息会被自动填写进实验报告中，请谨慎填写。</p>
-    <h3>你的身份是</h3>
+    <h3
+      style="    font-size: 18px;
+    font-weight: 600;line-height:55px">你的身份是</h3>
     <div class="start-test-content">
       <div v-for="(item,i) in cardList" :key="item.name" class="start-test-card">
         <div :class="{active:active==i}" @click="active = i">
@@ -22,7 +28,7 @@
         <Input v-model="form.name" placeholder="请填写您的姓名"></Input>
       </FormItem>
       <FormItem>
-        <Button type="primary" shape="circle" style="width:200px">开始实验</Button>
+        <Button type="primary" shape="circle" style="width:200px" @click="routerLink">开始实验</Button>
       </FormItem>
     </Form>
     <Form
@@ -84,6 +90,9 @@ export default {
   },
   methods: {
     routerLink() {
+      if (!this.form.name) {
+        return this.$Message.error('请填写您的姓名')
+      }
       if (this.active === 0) {
         this.form.school = '新疆财经大学'
       }
@@ -91,7 +100,7 @@ export default {
         ...this.form
       }
       form.type++
-      beginExperiment(this.form).then(res => {
+      beginExperiment(form).then(res => {
         this.$store.commit('setPersonalInfo', { type: this.active, ...this.form })
         this.$router.push({ name: 'practice' })
       })

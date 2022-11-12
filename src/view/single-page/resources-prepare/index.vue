@@ -14,7 +14,7 @@
       <router-link :to="{name:'topicSelection'}">
         <Button shape="circle">上一步</Button>
       </router-link>
-      <Button type="primary" shape="circle" @click="routerLink">下一步</Button>
+      <Button :disabled="disabled" type="primary" shape="circle" @click="routerLink">下一步</Button>
     </div>
   </div>
 </template>
@@ -38,6 +38,11 @@ export default {
       active: '',
       form: {},
       submit: false
+    }
+  },
+  computed: {
+    disabled() {
+      return !this.social1.length && !this.social2.length && !this.social3.length
     }
   },
   mounted() {

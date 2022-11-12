@@ -12,13 +12,13 @@
     <ZCheckbox v-model="social2" :show-play="true" :list="videoList" class="check" />
     <h3>音频素材库</h3>
     <Row :gutter="16" type="flex" justify="start" class="code-row-bg m-20">
-      <Col v-for="item in audioList" :key="item.id" span="2">
+      <Col v-for="item in audioList" :key="item.id" span="2" @click="openFile(item)">
       <img
         class="rounded"
         src="https://event.itouchtv.cn/laboratory/images/audio-icon9f9b08e4.png"
         alt=""
       >
-      <p class="text-sm font-bold text-center" style="font-size:14px">image-demo.mp3</p></Col
+      <p class="text-sm font-bold text-center" style="font-size:14px">{{ item.fileName }}</p></Col
       >
     </Row>
     <h3>文稿素材库</h3>
@@ -43,6 +43,14 @@
       >使用所选择素材</Button
       >
     </div>
+    <Modal
+      :footer-hide="true"
+      v-model="showFile"
+      :title="showUrlForm.fileName">
+      <div v-if="showFile">
+        <audio :src="$imgUrl(showUrlForm.url)" style="width:100%" controls autoplay />
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -58,7 +66,9 @@ export default {
     return {
       social1: [],
       social2: [],
-      fileList: []
+      fileList: [],
+      showFile: false,
+      showUrlForm: {}
     }
   },
   computed: {
@@ -89,6 +99,10 @@ export default {
     async getQueryFiles() {
       const res = await queryFiles()
       this.fileList = res.data
+    },
+    openFile(item) {
+      this.showUrlForm = item
+      this.showFile = true
     }
   }
 }
