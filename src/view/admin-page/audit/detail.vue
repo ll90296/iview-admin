@@ -38,8 +38,9 @@
                 :src="$imgUrl(detail.oneEx)"
                 controls="controls" />
             </div>
-            <p v-else-if="detail.onetype == 4" class="font-normal text-lg mt-4">{{ detail.oneText }}</p>
+            <p v-else-if="detail.onetype == 4" class="font-normal text-lg mt-4">{{ detail.oneEx }}</p>
           </div>
+          <p class="font-normal text-lg mt-4">{{ detail.oneText }}</p>
           <div>
             <img
               v-if="detail.twotype == 1"
@@ -59,8 +60,9 @@
                 :src="$imgUrl(detail.twoEx)"
                 controls="controls" />
             </div>
-            <p v-else-if="detail.twotype == 4" class="font-normal text-lg mt-4">{{ detail.twoText }}</p>
+            <p v-else-if="detail.twotype == 4" class="font-normal text-lg mt-4">{{ detail.twoEx }}</p>
           </div>
+          <p class="font-normal text-lg mt-4">{{ detail.twoText }}</p>
           <div>
             <img
               v-if="detail.threetype == 1"
@@ -80,8 +82,9 @@
                 :src="$imgUrl(detail.threeEx)"
                 controls="controls" />
             </div>
-            <p v-else-if="detail.threetype == 4" class="font-normal text-lg mt-4">{{ detail.threeText }}</p>
+            <p v-else-if="detail.threetype == 4" class="font-normal text-lg mt-4">{{ detail.threeEx }}</p>
           </div>
+          <p class="font-normal text-lg mt-4">{{ detail.threeText }}</p>
           <div>
             <img
               v-if="detail.fourtype == 1"
@@ -101,8 +104,9 @@
                 :src="$imgUrl(detail.fourEx)"
                 controls="controls" />
             </div>
-            <p v-else-if="detail.fourtype == 4" class="font-normal text-lg mt-4">{{ detail.fourText }}</p>
+            <p v-else-if="detail.fourtype == 4" class="font-normal text-lg mt-4">{{ detail.fourEx }}</p>
           </div>
+          <p class="font-normal text-lg mt-4">{{ detail.fourText }}</p>
           </Col>
         </Row>
         <Row class="px-4 mt-6">
