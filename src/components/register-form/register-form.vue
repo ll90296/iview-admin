@@ -14,14 +14,21 @@
       </span>
       </Input>
     </FormItem>
+    <FormItem prop="passwordTwo">
+      <Input v-model="form.passwordTwo" type="password" placeholder="请再次输入密码">
+      <span slot="prepend">
+        <Icon :size="14" type="md-lock"/>
+      </span>
+      </Input>
+    </FormItem>
     <FormItem>
-      <Button type="primary" long @click="handleSubmit">登录</Button>
+      <Button type="primary" long @click="handleSubmit">注册</Button>
     </FormItem>
   </Form>
 </template>
 <script>
 export default {
-  name: 'LoginForm',
+  name: 'RegisterForm',
   props: {
     userNameRules: {
       type: Array,
@@ -44,7 +51,8 @@ export default {
     return {
       form: {
         userName: '',
-        password: ''
+        password: '',
+        passwordTwo: ''
       }
     }
   },
@@ -52,11 +60,21 @@ export default {
     rules() {
       return {
         userName: this.userNameRules,
-        password: this.passwordRules
+        password: this.passwordRules,
+        passwordTwo: [{ required: true, trigger: 'blur', validator: this.validatePass2 }]
       }
     }
   },
   methods: {
+    validatePass2(rule, value, callback) {
+      if (value === '') {
+        callback(new Error('请再次输入密码'))
+      } else if (value !== this.form.password) {
+        callback(new Error('两次输入密码不一致!'))
+      } else {
+        callback()
+      }
+    },
     handleSubmit() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {

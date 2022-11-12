@@ -1,13 +1,13 @@
 <template>
   <div class="work-review container">
     <Card class="pb-10 pt-4">
-      <Tabs value="name1">
+      <Tabs :value="tabValue" @on-click="onClick">
         <TabPane label="审核通过" name="name1">
           <div class="list-wapper mt-4">
             <Table :columns="getAdoptList" :data="adoptList" class="tableInfoBox" highlight-row>
               <template slot="ID" slot-scope="{row}">
                 <div class="ID">
-                  {{ row.ID }}
+                  {{ row.seq }}
                 </div>
               </template>
               <template slot="title" slot-scope="{ row}">
@@ -25,14 +25,14 @@
               <template slot="author" slot-scope="{ row}">
                 <div class="author">
                   <p class="author">
-                    {{ row.author }}
+                    {{ row.userName }}
                   </p>
                 </div>
               </template>
               <template slot="date" slot-scope="{ row}">
                 <div class="date">
                   <p>
-                    {{ row.date }}
+                    {{ row.releaseTime }}
                   </p>
                 </div>
               </template>
@@ -46,16 +46,16 @@
               <template slot="fraction" slot-scope="{ row}">
                 <div class="fraction">
                   <p class="fraction">
-                    {{ row.fraction }}
+                    {{ row.grade }}
                   </p>
                 </div>
               </template>
               <template slot="operation" slot-scope="{ row}">
                 <div class="operation flex align-center">
-                  <p class="text-blue-500 cursor-pointer" @click="toDetail">
-                    {{ row.operation }}
+                  <p class="text-blue-500 cursor-pointer" @click="toDetail(row.id)">
+                    查看
                   </p>
-                  <p class="ml-4 text-blue-500 cursor-pointer" @click="toDetail">
+                  <p v-if="row.grade" class="ml-4 text-blue-500 cursor-pointer" @click="toDetail">
                     下载报告
                   </p>
                 </div>
@@ -68,7 +68,7 @@
             <Table :columns="getAdoptList" :data="returnList" class="tableInfoBox" highlight-row>
               <template slot="ID" slot-scope="{row}">
                 <div class="ID">
-                  {{ row.ID }}
+                  {{ row.seq }}
                 </div>
               </template>
               <template slot="title" slot-scope="{ row}">
@@ -86,21 +86,21 @@
               <template slot="author" slot-scope="{ row}">
                 <div class="author">
                   <p class="author">
-                    {{ row.author }}
+                    {{ row.userName }}
                   </p>
                 </div>
               </template>
               <template slot="date" slot-scope="{ row}">
                 <div class="date">
                   <p>
-                    {{ row.date }}
+                    {{ row.releaseTime }}
                   </p>
                 </div>
               </template>
               <template slot="comment" slot-scope="{ row}">
                 <div class="comment">
                   <p class="comment">
-                    {{ row.comment }}
+                    {{ row.count }}条
                   </p>
                 </div>
               </template>
@@ -113,7 +113,7 @@
               </template>
               <template slot="operation" slot-scope="{ row}">
                 <div class="operation flex align-center">
-                  <p class="text-blue-500 cursor-pointer" @click="toDetail">
+                  <p class="text-blue-500 cursor-pointer" @click="toDetail(row.id)">
                     {{ row.operation }}
                   </p>
                   <p class="ml-4 text-blue-500 cursor-pointer" @click="toDetail">
@@ -124,12 +124,13 @@
             </Table>
           </div>
         </TabPane>
-      </Tabs>
+      </Tabs> <Pagination :total="total" :page.sync="params.pageNum" :limit.sync="params.pageSize" style="text-align:right" class="mt-5" @change="getList(tabValue)" />
     </Card>
   </div>
 </template>
 
 <script>
+import { auditList } from '@/api/work-review'
 export default {
   name: 'WorkReview',
   components: {
@@ -137,109 +138,17 @@ export default {
   data() {
     return {
       adoptList: [
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          comment: '6条',
-          fraction: '90分',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          comment: '6条',
-          fraction: '90分',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          comment: '6条',
-          fraction: '90分',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          comment: '6条',
-          fraction: '90分',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          comment: '6条',
-          fraction: '90分',
-          operation: '查看'
-        }
+
       ],
       returnList: [
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          comment: '6条',
-          fraction: '90分',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          comment: '6条',
-          fraction: '90分',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          comment: '6条',
-          fraction: '90分',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          comment: '6条',
-          fraction: '90分',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          comment: '6条',
-          fraction: '90分',
-          operation: '查看'
-        }
-      ]
+
+      ],
+      params: {
+        pageNum: 1,
+        pageSize: 20
+      },
+      total: 0,
+      tabValue: 'name1'
     }
   },
   computed: {
@@ -291,10 +200,26 @@ export default {
   },
   mounted() {
     //
+    this.getList('name1')
   },
   methods: {
-    toDetail() {
-      this.$router.push('/work-detail')
+    toDetail(id) {
+      this.$router.push({ name: 'WorkDetail', query: { id, showComments: true }})
+    },
+    getList(name) {
+      auditList(this.params).then(res => {
+        console.log(res)
+        if (name === 'name1') {
+          this.adoptList = res.data.rows
+        } else {
+          this.returnList = res.data.rows
+        }
+        this.total = res.data.total
+      })
+    },
+    onClick(name) {
+      this.tabValue = name
+      this.getList(name)
     }
   }
 }

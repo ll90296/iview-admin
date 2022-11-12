@@ -3,16 +3,16 @@
     <Card>
       <div class="flex justify-between items-center p-2">
         <h4 class="font-semibold text-base">待审核</h4>
-        <Button>前往互评</Button>
+        <Button @click="routerLink">前往互评</Button>
       </div>
       <div class="list-wapper mt-4">
         <Table :columns="getWork" :data="workList" class="tableInfoBox" highlight-row>
           <template slot="ID" slot-scope="{row}">
             <div class="ID">
-              {{ row.ID }}
+              {{ row.seq }}
             </div>
           </template>
-          <template slot="title" slot-scope="{ row}">
+          <template slot="title" slot-scope="{row}">
             <div class="title">
               <p>
                 {{ row.title }}
@@ -27,105 +27,49 @@
           <template slot="author" slot-scope="{ row}">
             <div class="author">
               <p class="author">
-                {{ row.author }}
+                {{ row.userName }}
               </p>
             </div>
           </template>
           <template slot="date" slot-scope="{ row}">
             <div class="date">
               <p>
-                {{ row.date }}
+                {{ row.releaseTime }}
               </p>
             </div>
           </template>
           <template slot="operation" slot-scope="{ row}">
             <div class="operation flex align-center">
-              <p class="text-blue-500 cursor-pointer" @click="toDetail">
-                {{ row.operation }}
+              <p class="text-blue-500 cursor-pointer" @click="toDetail(row.id)">
+                查看
               </p>
-              <p class="ml-4 text-blue-500 cursor-pointer" @click="toDetail">
+              <p v-if="row.status == 1" class="ml-4 text-blue-500 cursor-pointer" @click="toDetail">
                 下载报告
               </p>
             </div>
           </template>
         </Table>
+        <Pagination :total="total" :page.sync="params.pageNum" :limit.sync="params.pageSize" style="text-align:right" class="mt-5" @change="getList" />
       </div>
     </Card>
   </div>
 </template>
 
 <script>
+import { auditList } from '@/api/work-review'
 export default {
   name: 'WorkReview',
   components: {
   },
   data() {
     return {
+      params: {
+        pageNum: 1,
+        pageSize: 20
+      },
+      total: 0,
       workList: [
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        }
+
       ]
     }
   },
@@ -167,11 +111,22 @@ export default {
     }
   },
   mounted() {
+    this.getList()
     //
   },
   methods: {
-    toDetail() {
-      this.$router.push('/work-detail')
+    getList() {
+      auditList(this.params).then(res => {
+        console.log(res)
+        this.workList = res.data.rows
+        this.total = res.data.total
+      })
+    },
+    toDetail(id) {
+      this.$router.push({ name: 'WorkDetail', query: { id }})
+    },
+    routerLink() {
+      this.$router.push({ name: 'ExhibitionEvaluate' })
     }
   }
 }

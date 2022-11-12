@@ -1,5 +1,6 @@
 import axios from 'axios'
 import store from '@/store'
+import { Message } from 'iview'
 import { getToken } from '@/libs/util'
 // import { Spin } from 'iview'
 const addErrorLog = errorInfo => {
@@ -51,6 +52,10 @@ class HttpRequest {
     instance.interceptors.response.use(res => {
       this.destroy(url)
       const { data, status } = res
+      if (data.code === 500) {
+        Message.error(data.msg)
+        return Promise.reject(data.msg)
+      }
       return { data, status }
     }, error => {
       this.destroy(url)

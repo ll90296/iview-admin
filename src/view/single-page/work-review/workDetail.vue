@@ -1,7 +1,7 @@
 <template>
-  <div class="work-detail container">
-    <Card class="pb-10 pt-4">
-      <div class="p-2">
+  <div class="work-detail container flex">
+    <Card class="pb-10" style="flex:1">
+      <div class="p-2 pb-4" style="border-bottom:1px solid #f0f3f8">
         <h4 class="font-semibold text-base">审核意见</h4>
       </div>
       <div class="detail-wapper mt-4">
@@ -10,7 +10,7 @@
           <p class="font-normal text-lg">标题</p>
           </Col>
           <Col span="22">
-          <p class="font-normal text-lg">新时代民工</p>
+          <p class="font-normal text-lg">{{ detail.title }}</p>
           </Col>
         </Row>
         <Row class="mt-6 px-4">
@@ -19,20 +19,90 @@
           </Col>
           <Col span="22">
           <div>
-            <img class="rounded-lg" src="https://file.iviewui.com/images/image-demo-13.jpg" alt="">
+            <img
+              v-if="detail.onetype == 1"
+              :src="detail.oneEx"
+              class="rounded-lg"
+              alt=""
+            >
+
+            <div
+              v-else-if="detail.onetype == 2"
+              class="mt-6 flex justify-center items-center">
+              <video
+                :src="detail.oneEx"
+                controls="controls" />
+            </div>
+            <div v-else-if="detail.onetype == 3" class="mt-2 flex justify-center items-center">
+              <audio
+                :src="detail.oneEx"
+                controls="controls" />
+            </div>
+            <p v-else-if="detail.onetype == 4" class="font-normal text-lg mt-4">{{ detail.oneText }}</p>
           </div>
-          <p class="font-normal text-lg mt-4">正文一</p>
-          <div class="mt-2 flex justify-center items-center">
-            <audio
-              src="http://video-touchtv.oss-cn-shenzhen.aliyuncs.com/nom/2019/xjfeu_lab/audio/v2.mp3"
-              controls="controls" />
+          <div>
+            <img
+              v-if="detail.twotype == 1"
+              :src="detail.twoEx"
+              class="rounded-lg"
+              alt=""
+            >
+            <div
+              v-else-if="detail.twotype == 2"
+              class="mt-6 flex justify-center items-center">
+              <video
+                :src="detail.twoEx"
+                controls="controls" />
+            </div>
+            <div v-else-if="detail.twotype == 3" class="mt-2 flex justify-center items-center">
+              <audio
+                :src="detail.twoEx"
+                controls="controls" />
+            </div>
+            <p v-else-if="detail.twotype == 4" class="font-normal text-lg mt-4">{{ detail.twoText }}</p>
           </div>
-          <div class="mt-6 flex justify-center items-center">
-            <video
-              src="http://video-touchtv.oss-cn-shenzhen.aliyuncs.com/nom/2019/xjfeu_lab/video/IMG_5592_4__hd.mp4"
-              controls="controls" />
+          <div>
+            <img
+              v-if="detail.threetype == 1"
+              :src="detail.threeEx"
+              class="rounded-lg"
+              alt=""
+            >
+            <div
+              v-else-if="detail.threetype == 2"
+              class="mt-6 flex justify-center items-center">
+              <video
+                :src="detail.threeEx"
+                controls="controls" />
+            </div>
+            <div v-else-if="detail.threetype == 3" class="mt-2 flex justify-center items-center">
+              <audio
+                :src="detail.threeEx"
+                controls="controls" />
+            </div>
+            <p v-else-if="detail.threetype == 4" class="font-normal text-lg mt-4">{{ detail.threeText }}</p>
           </div>
-          <p class="font-normal text-lg mt-6">巴燕·乌拉孜别克在知道老师要来自己家访问的消息后，早早便在路边等候。太阳很大，但巴燕期盼的心情更为炽热。一下车，老师的手便与她紧紧交握在一起，喜悦洋溢在每个人的脸上。 在访问时，由于母亲国语水平较弱，巴燕便主动担当起了“翻译官”的职责，努力表达出母亲口中的每一份喜悦。 “巴燕非常优秀，谢谢你们输送这么好的人才到我们学校来。” 在大学期间，巴燕的成绩依旧很优秀，专业课平均都在九十分左右。巴燕有想要考研的想法，但英语使她十分苦恼。 周老师：“如果我们光按部就班的按照学校的课程走，是‘吃不饱’的。一定要下苦工夫，成绩都是一点一滴积累出来的。” 进班级、进宿舍、进食堂，联系学生、联系家长，与学生交朋友。广大师生在活动中增进感情，在交流中相互学习，以落实保障总目标在高校的土地上落地生根。 老师们走出校园，走到学生家中，走入学生家长们的心里。实现真正的沟通“零距离”。 “通过老师的指导我学到了很多，希望以后能多多开展这样的活动。” 万风银说：“这是我们第一次搞这样大规模的家访活动，特别有意义。三进两联一交友活动以前，我们老师跟学生的交流都特别少。我们现在到学生家里来家访，更增进了学校和家长之间的沟通和了解。” “一代人有一代人的使命，青年们是国家的未来。青年一代有理想、有本领、有担当，国家就有前途，民族才能希望。”周丽老师期冀道。 家访，访进了心，访出了情。有了小家之间的亲密和谐才能有大国的和谐稳定。三进两联一交友，师生情，家校情，共同为总目标源源不断注入新的动力。</p>
+          <div>
+            <img
+              v-if="detail.fourtype == 1"
+              :src="detail.fourEx"
+              class="rounded-lg"
+              alt=""
+            >
+            <div
+              v-else-if="detail.fourtype == 2"
+              class="mt-6 flex justify-center items-center">
+              <video
+                :src="detail.fourEx"
+                controls="controls" />
+            </div>
+            <div v-else-if="detail.fourtype == 3" class="mt-2 flex justify-center items-center">
+              <audio
+                :src="detail.fourEx"
+                controls="controls" />
+            </div>
+            <p v-else-if="detail.fourtype == 4" class="font-normal text-lg mt-4">{{ detail.fourText }}</p>
+          </div>
           </Col>
         </Row>
         <Row class="px-4 mt-6">
@@ -41,7 +111,7 @@
           </Col>
           <Col span="22">
           <div>
-            <img class="w-40 rounded" src="https://file.iviewui.com/images/image-demo-13.jpg" alt="">
+            <img :src="detail.cover" class="w-40 rounded" alt="">
           </div>
           </Col>
         </Row>
@@ -51,89 +121,110 @@
           </Col>
           <Col span="22">
           <div class="flex items-center">
-            <Tag color="primary">H5</Tag>
-            <Tag color="primary">APP</Tag>
+            <Tag v-for="item in detail.distribute" :key="item" color="primary">{{ item }}</Tag>
           </div>
           </Col>
         </Row>
+      </div>
+    </Card>
+    <Card v-if="$route.query.showComments" class="ml-10" style="width:300px">
+      <div class="p-2">
+        <h4 class="font-semibold text-base pb-4 mb-4" style="border-bottom:1px solid #f0f3f8">实验评价</h4>
+        <p><span class="font-semibold">选题：</span> 思想突出，反映社会和时代亮点，激发用户的关注度。</p>
+        <RadioGroup
+          v-model="detail.selectedScore"
+          class="py-5"
+          style="    width: 100%;
+    display: flex;
+    justify-content: space-between;">
+          <Radio :label="20" disabled/>
+          <Radio :label="15" disabled/>
+          <Radio :label="10" disabled/>
+          <Radio :label="5" disabled/>
+          <Radio :label="0" disabled/>
+        </RadioGroup>
+        <p><span class="font-semibold">事实的选择：</span> 突出新闻价值，具有客观、具体、真实特点，以点带面，可以成为用户关注的焦点。</p>
+        <RadioGroup
+          v-model="detail.choiceScore"
+          class="py-5"
+          style="    width: 100%;
+    display: flex;
+    justify-content: space-between;">
+          <Radio :label="20" disabled/>
+          <Radio :label="15" disabled/>
+          <Radio :label="10" disabled/>
+          <Radio :label="5" disabled/>
+          <Radio :label="0" disabled/>
+        </RadioGroup>
+        <p><span class="font-semibold">事实的认识与把握：</span>  新闻事实表现一定主题思想，视角独特。</p>
+        <RadioGroup
+          v-model="detail.cognitionScore"
+          class="py-5"
+          style="    width: 100%;
+    display: flex;
+    justify-content: space-between;">
+          <Radio :label="20" disabled/>
+          <Radio :label="15" disabled/>
+          <Radio :label="10" disabled/>
+          <Radio :label="5" disabled/>
+          <Radio :label="0" disabled/>
+        </RadioGroup>
+        <p><span class="font-semibold">事实的反映与表现：</span>  结构合理，评述结合，运用多种媒介元素符号组合报道，具有较强的可分享性。</p>
+        <RadioGroup
+          v-model="detail.reflectScore"
+          class="py-5"
+          style="    width: 100%;
+    display: flex;
+    justify-content: space-between;">
+          <Radio :label="20" disabled/>
+          <Radio :label="15" disabled/>
+          <Radio :label="10" disabled/>
+          <Radio :label="5" disabled/>
+          <Radio :label="0" disabled/>
+        </RadioGroup>
+        <div style="text-align:right">
+          <span>合计：</span><span
+            style="color: #333;
+    font-size: 38px;
+    font-weight: bold;">{{ detail.totalScore }}</span><span>分</span>
+        </div>
+      </div>
+      <div class="p-2">
+        <h4 class="font-semibold text-base pb-4 mb-4" style="border-bottom:1px solid #f0f3f8">作品评分</h4>
+        <p>本作品得分：{{ detail.totalScore }}分</p>
+      </div>
+      <i-input v-model="content" :rows="4" type="textarea" placeholder="请输入评论内容" /></i-input>
+      <div style="text-align:right" class="pt-5">
+        <Button type="primary" shape="circle" @click="submitCOmment">发表</Button>
+      </div>
+      <div class="p-2">
+        <h4 class="font-semibold text-base pb-4 mb-4" style="border-bottom:1px solid #f0f3f8">互评动态</h4>
+      </div>
+      <div>
+        <div v-for="item in commentList" :key="item.id">
+          <div class="flex"><img class="mr-2 mb-3" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAB9ElEQVQ4T5VVO44TQRSsZ48/0/7KzsbhBoh877GLECRcAyOOsGI5BiQrrZa9BzkQbGSZwJl/PfKM7UKvsY3dboN52czrrqnqqn4jCBTJUpqm1wCuAFwCSDbLfgL4CuAxjuMvIpL728V/Ya19QfIWwEXoY3vvnkSkb4x52F+3AyRZSNP0BsBbkkcfCoGLCAF8jOP4vYisdc1uo7X2A8n+P1gF2yJya4x5twNUmQDufWbL5RLWWuR5jkKhgEqlgjiOIXIoYMP0pcoXNcBa+80/s9VqhfF4DFJV/SkFrdfrIaZPxpjnYq19RfLOXzGbzbBYLIIS2+02isXiUU9EXivgJ5Jv/K6yU8mhajQaKJfLIcDPCvid5DO/O51OkWVZELDVaiGKohDgDwWckGz4XTViMpkcbSqVSmg2m6fcnp4E1B3KcD6fY712EXMya7Wac/xELh1gULK6q6YoqJ6lgig7dTkk12VQxEk+MkUB9Ay3zHw21WoVxphQHp0pB7E5lT8fNJRHFxs/2H+Liw+q5ugxbOp3sPVhe/XyPBcFPLfUJM3kwdXbbtbhkKZpX109t/ROdzodBTwcDgqg42s0Gt1kWfZf46vb7YbH15bVYDA4e8BGUdRPkiQ8YPdlqlHD4fBaRK5IXpJMVJ6IuF8Aycderxf8BfwCJiEZvmphP2QAAAAASUVORK5CYII=" alt=""><span class="font-semibold">{{ item.createBy }}</span></div>
+          <p class="mb-3">{{ item.content }}</p>
+          <p class="mb-6">{{ item.createTime }}</p>
+        </div>
       </div>
     </Card>
   </div>
 </template>
 
 <script>
+import { auditResult, querScore, workersScore, queryComment, createComment } from '@/api/work-review'
 export default {
   name: 'WorkReview',
   components: {
   },
   data() {
     return {
-      workList: [
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        },
-        {
-          ID: 1,
-          title: '新时代民工',
-          cover: 'https://file.iviewui.com/images/image-demo-13.jpg',
-          author: '11111',
-          date: '2022年10月28日',
-          operation: '查看'
-        }
-      ]
+      detail: {},
+      workesDetail: {},
+      workesTwoDetail: {},
+      commentList: [],
+      Group: 20,
+      content: ''
     }
   },
   computed: {
@@ -175,8 +266,45 @@ export default {
   },
   mounted() {
     //
+    console.log(this.$route.query, 'his.$route.query')
+    this.getDetail(this.$route.query.id)
+    this.getQuerScore(this.$route.query.id)
+    this.getqueryComment(this.$route.query.id)
   },
   methods: {
+    getDetail(id) {
+      auditResult({ id }).then(res => {
+        console.log(res, 'res')
+        res.data.distribute = res.data.distribute.split(',')
+        this.detail = res.data
+      })
+    },
+    getQuerScore(id) {
+      querScore({ workesId: id }).then(res => {
+        this.workesDetail = res.data
+        // this.getworkersScore(id, res.data.totalScore)
+      })
+    },
+    getworkersScore(worksId, totalScore) {
+      workersScore({ worksId, totalScore }).then(res => {
+        console.log(res, 'res')
+        this.workesTwoDetail = res.data
+      })
+    },
+    getqueryComment(worksId) {
+      queryComment(worksId).then(res => {
+        console.log(res, 'res')
+        this.commentList = res.data.rows
+      })
+    },
+    submitCOmment() {
+      createComment({
+        'worksId': this.$route.query.id,
+        'content': this.content
+      }).then(res => {
+        this.getqueryComment(this.$route.query.id)
+      })
+    }
   }
 }
 </script>

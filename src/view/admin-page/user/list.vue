@@ -14,8 +14,8 @@
         >
       </template>
     </Table>
-    <!--  @change="getList" -->
-    <Pagination :total="total" :page.sync="params.pageNum" :limit.sync="params.pageSize" />
+    <!--  -->
+    <Pagination :total="total" :page.sync="params.pageNum" :limit.sync="params.pageSize" @change="getList" />
     <Modal v-model="modal1" title="编辑权限" @on-ok="ok" @on-cancel="cancel">
       <Form ref="formInline" :model="form" :rules="ruleform">
         <FormItem prop="user" label="角色">
@@ -94,7 +94,7 @@ export default {
     getList() {
       console.log(this.params, 'par')
       userList(this.params).then((res) => {
-        this.total = 100 // res.data.total
+        this.total = res.data.total
         this.data = res.data.rows
       })
     },

@@ -2,9 +2,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+import iView from 'iview'
 import router from './router'
 import store from './store'
-import iView from 'iview'
 import i18n from '@/locale'
 import config from '@/config'
 import importDirective from '@/directive'
@@ -44,6 +44,10 @@ Vue.config.productionTip = false;
  * @description 全局注册应用配置
  */
 Vue.prototype.$config = config;
+let imgUrl = (imgUrl)=>{
+  return config.baseUrl.dev + '/' + imgUrl
+}
+Vue.prototype.$imgUrl = imgUrl;
 /**
  * 注册指令
  */

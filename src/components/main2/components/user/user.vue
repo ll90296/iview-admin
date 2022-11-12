@@ -4,11 +4,12 @@
       <Badge :dot="!!messageUnreadCount">
         <Avatar :src="userAvatar"/>
       </Badge>
-      <Icon :size="18" type="md-arrow-dropdown"></Icon>
+      <Icon :size="18" type="md-arrow-dropdown"/>
       <DropdownMenu slot="list">
         <DropdownItem name="message">
-          消息中心<Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>
+          消息中心<Badge :count="messageUnreadCount" style="margin-left: 10px"/>
         </DropdownItem>
+        <DropdownItem name="switch">切换前台</DropdownItem></DropdownItem>
         <DropdownItem name="logout">退出登录</DropdownItem>
       </DropdownMenu>
     </Dropdown>
@@ -34,21 +35,24 @@ export default {
     ...mapActions([
       'handleLogOut'
     ]),
-    logout () {
+    logout() {
       this.handleLogOut().then(() => {
         this.$router.push({
           name: 'login'
         })
       })
     },
-    message () {
+    message() {
       this.$router.push({
         name: 'message_page'
       })
     },
-    handleClick (name) {
+    handleClick(name) {
       switch (name) {
         case 'logout': this.logout()
+          break
+        case 'switch':
+          this.$router.push('/')
           break
         case 'message': this.message()
           break

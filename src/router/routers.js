@@ -251,15 +251,15 @@ export default [
         component: () => import('@/view/admin-page/material-upload/index.vue')
       },
       {
-        path: 'manuscripts-upload',
-        name: 'manuscriptsUpload',
+        path: 'question-bank',
+        name: 'questionBank',
         meta: {
           access: [1, 2, 4],
           icon: 'logo-buffer',
-          title: '文稿上传',
+          title: '题库',
           notCache: true
         },
-        component: () => import('@/view/admin-page/manuscripts-upload/index.vue')
+        component: () => import('@/view/admin-page/question-bank/index.vue')
       }
     ]
   },

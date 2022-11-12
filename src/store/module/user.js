@@ -83,6 +83,7 @@ export default {
           passWord
         }).then(res => {
           const data = res.data.data
+          commit('setUserName', data.userName)
           commit('setToken', data.token)
           commit('setAccess', [data.level])
           resolve()
