@@ -1,8 +1,8 @@
 <template>
   <div class="work-review container">
     <Card class="pb-10 pt-4">
-      <Form :label-width="100">
-        <FormItem label="标题" class="text-lg">
+      <Form ref="form" :label-width="100" :model="form" :rules="ruleValidate" >
+        <FormItem label="标题" class="text-lg" prop="title">
           <Input v-model="form.title" placeholder="内容不能为空"></Input>
         </FormItem>
         <FormItem label="正文" class="text-lg">
@@ -227,8 +227,8 @@
             </div>
           </div>
         </FormItem>
-        <FormItem label="分发平台" class="text-lg">
-          <CheckboxGroup v-model="distribute">
+        <FormItem label="分发平台" class="text-lg" prop="distribute">
+          <CheckboxGroup v-model="form.distribute">
             <Checkbox label="APP" />
             <Checkbox label="H5" />
             <Checkbox label="微信公众号" />
@@ -260,6 +260,14 @@
 <script>
 import Dialog from './dialog.vue'
 import { subjectTestSubmit } from '@/api/work-production'
+
+const validate = (rule, value, callback) => {
+  if (value.length < 2) {
+    callback(new Error('至少选择两个平台进行分发'))
+  } else {
+    callback()
+  }
+}
 export default {
   name: 'WorkReview',
   components: {
@@ -272,10 +280,18 @@ export default {
         twoEx: null,
         threeEx: null,
         fourEx: null,
-        cover: null
+        cover: null,
+        distribute: []
+      },
+      ruleValidate: {
+        title: [
+          { required: true, message: '请输入标题', trigger: 'blur' }
+        ],
+        distribute: [
+          { required: true, validator: validate, trigger: 'blur' }
+        ]
       },
       fileType: '',
-      distribute: [],
       onlyImg: false
     }
   },
@@ -324,28 +340,32 @@ export default {
       console.log(this.form.oneEx, 'this.form.oneEx')
     },
     submit() {
-      try {
-        const form = {
-          status: 0,
-          distribute: this.distribute.join(','),
-          userName: this.$store.state.user.userName,
-          releaseTime: new Date().Format('yyyy-MM-dd hh:mm:ss'),
-          ...this.form,
-          ...this.$store.state.app.globalData
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          try {
+            const form = {
+              status: 0,
+              distribute: this.form.distribute.join(','),
+              userName: this.$store.state.user.userName,
+              releaseTime: new Date().Format('yyyy-MM-dd hh:mm:ss'),
+              ...this.form,
+              ...this.$store.state.app.globalData
+            }
+            form.oneEx = form.oneEx.id
+            form.twoEx = form.twoEx.id
+            form.threeEx = form.threeEx.id
+            form.fourEx = form.fourEx.id
+            form.cover = form.cover.id
+            subjectTestSubmit(form).then(res => {
+              this.$store.commit('setPersonalInfo', {})
+              sessionStorage.removeItem('personalInfo')
+              this.$router.push({ name: 'WorkReview' })
+            })
+          } catch (error) {
+            this.$Message.error('请补全作品！')
+          }
         }
-        form.oneEx = form.oneEx.id
-        form.twoEx = form.twoEx.id
-        form.threeEx = form.threeEx.id
-        form.fourEx = form.fourEx.id
-        form.cover = form.cover.id
-        subjectTestSubmit(form).then(res => {
-          this.$store.commit('setPersonalInfo', {})
-          sessionStorage.removeItem('personalInfo')
-          this.$router.push({ name: 'WorkReview' })
-        })
-      } catch (error) {
-        this.$Message.error('请补全作品！')
-      }
+      })
     }
   }
 }
