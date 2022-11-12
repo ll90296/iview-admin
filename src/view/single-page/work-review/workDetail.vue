@@ -20,88 +20,86 @@
           <Col span="22">
           <div>
             <img
-              v-if="detail.onetype == 1"
+              v-if="detail.oneType == 1"
               :src="detail.oneEx"
               class="rounded-lg"
-              alt=""
-            >
-
+              alt="">
             <div
-              v-else-if="detail.onetype == 2"
+              v-else-if="detail.oneType == 2"
               class="mt-6 flex justify-center items-center">
               <video
                 :src="detail.oneEx"
                 controls="controls" />
             </div>
-            <div v-else-if="detail.onetype == 3" class="mt-2 flex justify-center items-center">
+            <div v-else-if="detail.oneType == 3" class="mt-2 flex justify-center items-center">
               <audio
                 :src="detail.oneEx"
                 controls="controls" />
             </div>
-            <p v-else-if="detail.onetype == 4" class="font-normal text-lg mt-4">{{ detail.oneText }}</p>
+            <p v-else-if="detail.oneType == 4" class="font-normal text-lg mt-4">{{ detail.oneText }}</p>
           </div>
           <div>
             <img
-              v-if="detail.twotype == 1"
+              v-if="detail.twoType == 1"
               :src="detail.twoEx"
               class="rounded-lg"
               alt=""
             >
             <div
-              v-else-if="detail.twotype == 2"
+              v-else-if="detail.twoType == 2"
               class="mt-6 flex justify-center items-center">
               <video
                 :src="detail.twoEx"
                 controls="controls" />
             </div>
-            <div v-else-if="detail.twotype == 3" class="mt-2 flex justify-center items-center">
+            <div v-else-if="detail.twoType == 3" class="mt-2 flex justify-center items-center">
               <audio
                 :src="detail.twoEx"
                 controls="controls" />
             </div>
-            <p v-else-if="detail.twotype == 4" class="font-normal text-lg mt-4">{{ detail.twoText }}</p>
+            <p v-else-if="detail.twoType == 4" class="font-normal text-lg mt-4">{{ detail.twoText }}</p>
           </div>
           <div>
             <img
-              v-if="detail.threetype == 1"
+              v-if="detail.threeType == 1"
               :src="detail.threeEx"
               class="rounded-lg"
               alt=""
             >
             <div
-              v-else-if="detail.threetype == 2"
+              v-else-if="detail.threeType == 2"
               class="mt-6 flex justify-center items-center">
               <video
                 :src="detail.threeEx"
                 controls="controls" />
             </div>
-            <div v-else-if="detail.threetype == 3" class="mt-2 flex justify-center items-center">
+            <div v-else-if="detail.threeType == 3" class="mt-2 flex justify-center items-center">
               <audio
                 :src="detail.threeEx"
                 controls="controls" />
             </div>
-            <p v-else-if="detail.threetype == 4" class="font-normal text-lg mt-4">{{ detail.threeText }}</p>
+            <p v-else-if="detail.threeType == 4" class="font-normal text-lg mt-4">{{ detail.threeText }}</p>
           </div>
           <div>
             <img
-              v-if="detail.fourtype == 1"
+              v-if="detail.fourType == 1"
               :src="detail.fourEx"
               class="rounded-lg"
               alt=""
             >
             <div
-              v-else-if="detail.fourtype == 2"
+              v-else-if="detail.fourType == 2"
               class="mt-6 flex justify-center items-center">
               <video
                 :src="detail.fourEx"
                 controls="controls" />
             </div>
-            <div v-else-if="detail.fourtype == 3" class="mt-2 flex justify-center items-center">
+            <div v-else-if="detail.fourType == 3" class="mt-2 flex justify-center items-center">
               <audio
                 :src="detail.fourEx"
                 controls="controls" />
             </div>
-            <p v-else-if="detail.fourtype == 4" class="font-normal text-lg mt-4">{{ detail.fourText }}</p>
+            <p v-else-if="detail.fourType == 4" class="font-normal text-lg mt-4">{{ detail.fourText }}</p>
           </div>
           </Col>
         </Row>
@@ -274,9 +272,9 @@ export default {
   methods: {
     getDetail(id) {
       auditResult({ id }).then(res => {
-        console.log(res, 'res')
         res.data.distribute = res.data.distribute.split(',')
         this.detail = res.data
+        console.log(this.detail, 'res')
       })
     },
     getQuerScore(id) {
