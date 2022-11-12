@@ -8,7 +8,7 @@
       class-name="vertical-center-modal"
       @on-ok="ok"
     >
-      <Tabs value="name1">
+      <Tabs v-model="tabValue">
         <TabPane label="图片素材" name="name1">
           <div
             style="
@@ -137,7 +137,8 @@ export default {
     return {
       addData: false,
       fileList: [],
-      data: {}
+      data: {},
+      tabValue: 'name1'
     }
   },
   computed: {
@@ -156,6 +157,16 @@ export default {
     },
     articleList() {
       return this.fileList.filter((item) => item.type === 4)
+    }
+  },
+  watch: {
+    onlyImg: {
+      immediate: true,
+      handler(newVal) {
+        if (newVal) {
+          this.tabValue = 'name1'
+        }
+      }
     }
   },
   mounted() {

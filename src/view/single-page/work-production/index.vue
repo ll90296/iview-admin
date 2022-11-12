@@ -338,7 +338,6 @@ export default {
         form.threeEx = form.threeEx.id
         form.fourEx = form.fourEx.id
         form.cover = form.cover.id
-
         subjectTestSubmit(form).then(res => {
           this.$store.commit('setPersonalInfo', {})
           sessionStorage.removeItem('personalInfo')
