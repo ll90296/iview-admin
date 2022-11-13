@@ -56,6 +56,18 @@ export default {
       }
     }
   },
+  watch: {
+    form: {
+      deep: true,
+      handler(newVal) {
+        console.log('form', newVal)
+        this.$emit('update:passwordRules', [
+          { required: true, message: '密码不能为空', trigger: 'blur' }
+        ])
+        console.log(this.passwordRules, 'passwordRules')
+      }
+    }
+  },
   methods: {
     handleSubmit() {
       this.$refs.loginForm.validate((valid) => {
