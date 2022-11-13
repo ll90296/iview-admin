@@ -102,6 +102,7 @@ export default {
       }
       form.type++
       beginExperiment(form).then(res => {
+        this.$store.commit('setGlobalData', { choseSubject: form.type })
         this.$store.commit('setPersonalInfo', { type: this.active, ...this.form })
         this.$router.push({ name: 'practice' })
       })

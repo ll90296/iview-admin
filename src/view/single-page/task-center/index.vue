@@ -42,7 +42,7 @@ export default {
       if (!this.form.topic) {
         return this.$Message.warning('请为新闻选题拟定题目')
       }
-      this.$store.commit('setGlobalData', { choseSubject: this.active, ...this.form })
+      this.$store.commit('setGlobalData', { ...this.form })
       this.$router.push({ name: 'resourcesPrepare' })
     }
   }
