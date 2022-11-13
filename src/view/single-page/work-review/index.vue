@@ -43,9 +43,9 @@
               <p class="text-blue-500 cursor-pointer" @click="toDetail(row.id)">
                 查看
               </p>
-              <p v-if="row.status == 1" class="ml-4 text-blue-500 cursor-pointer" @click="toDetail">
+              <!-- <p v-if="row.status == 1" class="ml-4 text-blue-500 cursor-pointer" @click="toDetail">
                 下载报告
-              </p>
+              </p> -->
             </div>
           </template>
         </Table>
