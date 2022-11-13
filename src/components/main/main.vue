@@ -93,7 +93,6 @@
               :right="50"
               container=".content-wrapper"
             />
-            {{ form.name }}
           </Content>
         </Layout>
       </Content>

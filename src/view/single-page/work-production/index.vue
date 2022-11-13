@@ -308,6 +308,7 @@ export default {
       return this.$store.state.app.globalData.threeEx
     },
     fourEx() {
+      console.log(this.$store.state.app.globalData.fourEx, 'this.$store.state.app.globalData.oneEx')
       return this.$store.state.app.globalData.fourEx
     }
   },
@@ -325,7 +326,6 @@ export default {
       this.$refs.addData.open()
     },
     change(data) {
-      console.log(data, 'data')
       switch (this.fileType) {
         case 1:
           this.form.oneEx = data
@@ -345,7 +345,6 @@ export default {
         default:
           break
       }
-      console.log(this.form.oneEx, 'this.form.oneEx')
     },
     submit() {
       this.$refs['form'].validate((valid) => {
@@ -355,8 +354,8 @@ export default {
               status: 0,
               userName: this.$store.state.user.userName,
               releaseTime: new Date().Format('yyyy-MM-dd hh:mm:ss'),
-              ...this.form,
-              ...this.$store.state.app.globalData
+              ...this.$store.state.app.globalData,
+              ...this.form
             }
             form.distribute = this.form.distribute.join(',')
             form.oneEx = form.oneEx.id

@@ -96,7 +96,9 @@ export default {
   },
   mounted() {
     document.addEventListener('click', (e) => {
-      if (!this.$refs.rightMenu.contains(e.target)) { this.rightMenuVisible = false }
+      if (this.$refs.rightMenu) {
+        if (!this.$refs.rightMenu.contains(e.target)) { this.rightMenuVisible = false }
+      }
     })
   },
   methods: {
