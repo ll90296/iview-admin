@@ -15,18 +15,21 @@
       v-model="showModal"
       :footer-hide="true"
       title="新增练习题">
-      <Form ref="formCustom" :model="form" :label-width="100" :rules="ruleValidate">
+      <Form ref="formCustom" :model="form" :rules="ruleValidate">
         <FormItem label="题号" prop="number">
-          <Input v-model="form.number" placeholder="请输入题目"></Input>
+          {{ form.number }}
         </FormItem >
         <FormItem label="题目" prop="testName">
           <Input v-model="form.testName" placeholder="请输入题目"></Input>
         </FormItem >
-        <FormItem label="答案解析" prop="testEx">
-          <Input v-model="form.testEx" :autosize="{minRows: 2,maxRows: 5}" type="textarea" placeholder="请输入答案解析"></Input>
-        </FormItem >
+        <!-- <FormItem label="答案解析" prop="testEx"> -->
+        <p
+          style="font-size: 16px;
+    padding: 10px 12px 10px 0;">答案解析</p>
+        <Input v-model="form.testEx" :autosize="{minRows: 2,maxRows: 5}" type="textarea" placeholder="请输入答案解析"></Input>
+        <!-- </FormItem > -->
 
-        <Button type="primary" class="mb-5" @click="addQuestion">新增</Button>
+        <Button type="primary" class="mb-5 mt-2" @click="addQuestion">新增</Button>
         <Table :columns="questionColumns" :data="form.list">
           <template slot-scope="{ row, index }" slot="testOption">
             <FormItem
@@ -62,7 +65,6 @@
             </i-Switch>
           </template>
           <template slot-scope="{ row, index }" slot="action">
-            <!-- <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">编辑</Button> -->
             <Button type="error" size="small" @click="removeQuestion(index)">删除</Button>
           </template>
         </Table>
@@ -128,9 +130,6 @@ export default {
         testName: [
           { required: true, message: '不可为空', trigger: 'blur' }
         ],
-        testEx: [
-          { required: true, message: '不可为空', trigger: 'blur' }
-        ],
         testOption: [
           { required: true, message: '不可为空', trigger: 'blur' }
         ],
@@ -161,6 +160,7 @@ export default {
       })
     },
     add() {
+      this.form.number = this.data[this.data.length - 1].number + 1
       this.showModal = true
     },
     ok() {

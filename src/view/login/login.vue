@@ -7,9 +7,10 @@
     <div class="login-con">
       <Card :bordered="false" icon="log-in" title="欢迎登录">
         <div class="form-con">
-          <login-form v-if="!type" @on-success-valid="handleSubmit"/>
+          <login-form v-if="!type" ref="loginForm" :password-rules="passwordRules" @on-success-valid="handleSubmit"/>
           <register-form v-else @on-success-valid="handleSubmit($event,'register')"/>
-          <p class="login-tip" @click="type = 'register'">去注册</p>
+          <p v-if="type =='register'" class="login-tip" @click="type = ''">去登录</p>
+          <p v-else class="login-tip" @click="type = 'register'">去注册</p>
         </div>
       </Card>
     </div>
@@ -28,7 +29,10 @@ export default {
   },
   data() {
     return {
-      type: ''
+      type: '',
+      passwordRules: [
+        { required: true, message: '密码不能为空', trigger: 'blur' }
+      ]
     }
   },
   methods: {
@@ -37,11 +41,6 @@ export default {
       'getUserInfo'
     ]),
     handleSubmit({ userName, passWord }, type) {
-      // register({ userName, passWord }).then(res => {
-      //   console.log(res, 'res')
-      // })
-      // return
-      console.log(type, 'type')
       if (type === 'register') {
         register({ userName, passWord }).then(res => {
           this.$Message.success('注册成功！')
@@ -49,11 +48,16 @@ export default {
         })
       } else {
         this.handleLogin({ userName, passWord }).then(res => {
-        // this.getUserInfo().then(res => {
+          if (res) {
+            this.passwordRules = [
+              { validator: (rule, value, callback) => { callback(new Error(res)) }, trigger: 'blur' }
+            ]
+            this.$refs.loginForm.validate()
+            return
+          }
           this.$router.push({
             name: this.$config.homeName
           })
-        // })
         })
       }
     }

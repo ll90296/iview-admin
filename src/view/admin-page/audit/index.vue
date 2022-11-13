@@ -3,11 +3,20 @@
     <Card>
       <Form ref="formInline" :label-width="100" inline>
         <FormItem label="审核状态">
-          <Select v-model="params.status" clearable @on-change="getList">
+          <Select v-model="params.status" clearable style="width:150px" @on-change="getList">
             <Option :value="0">待审核</Option>
             <Option :value="1">审核通过</Option>
             <Option :value="2">被退回</Option>
           </Select>
+        </FormItem>
+        <FormItem :required="false" :hide-required-asterisk="true" label="学生姓名">
+          <Input v-model="params.name" placeholder="请输入学生姓名" @on-enter="getList"></Input>
+        </FormItem>
+        <FormItem label="班级名称">
+          <Input v-model="params.sclass" placeholder="请输入班级名称" @on-enter="getList"></Input>
+        </FormItem>
+        <FormItem label="新闻标题">
+          <Input v-model="params.title" placeholder="请输入新闻标题" @on-enter="getList"></Input>
         </FormItem>
       </Form>
       <div class="list-wapper mt-4">
@@ -145,5 +154,11 @@ export default {
 .work-review {
   text-align: center;
 
+}
+::v-deep .ivu-input{
+    padding-left: 0;
+     padding-right: 0;
+     height: auto;
+     border-radius: 0
 }
 </style>

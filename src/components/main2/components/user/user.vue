@@ -19,6 +19,7 @@
 <script>
 import './user.less'
 import { mapActions } from 'vuex'
+import Cookies from 'js-cookie'
 export default {
   name: 'User',
   props: {
@@ -36,10 +37,11 @@ export default {
       'handleLogOut'
     ]),
     logout() {
-      this.handleLogOut().then(() => {
-        this.$router.push({
-          name: 'login'
-        })
+      this.$store.commit('setPersonalInfo', {})
+      sessionStorage.removeItem('personalInfo')
+      Cookies.remove('token')
+      this.$router.push({
+        name: 'login'
       })
     },
     message() {

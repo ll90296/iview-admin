@@ -1,7 +1,6 @@
 <template>
   <div style="height:100%">
     <div
-      v-if="selectionActive == 0"
       class="TopicSelection">
       <div>
         <Card
@@ -23,19 +22,7 @@
         style="
     display: flex;
     justify-content: center;margin-top:20px">
-        <Button type="primary" shape="circle" style="width:200px;height:44px" @click="updateActive(1)">确认选题</Button>
-      </div>
-    </div>
-    <multipleChoice v-if="selectionActive == 1" :list="multipleList" class="boxShadow" @complete="updateActive(2)" />
-    <div v-if="selectionActive == 2" class="boxShadow">
-      <Card class="hint-title" dis-hover>您选择了“{{ activeName }}”新闻选题</Card>
-      <h3
-        style="margin-top: 62px;margin-bottom:20px;color: #333;
-    font-size: 18px;
-    font-weight: 600;">请为新闻选题拟定题目</h3>
-      <Input v-model="form.title" style="width:558px;margin-bottom:20px" placeholder="在此处填写题目"></Input>
-      <div>
-        <Button type="primary" shape="circle" style="width:140px;height:44px" @click="routerLink">下一步</Button>
+        <Button type="primary" shape="circle" style="width:200px;height:44px" @click="routerLink">确认选题</Button>
       </div>
     </div>
   </div>
@@ -43,27 +30,27 @@
 
 <script>
 import multipleChoice from '@/components/multipleChoice'
+import taskCenter from '@/view/single-page/task-center'
 import { getTestList } from '@/api/practice'
 export default {
   name: 'TopicSelection',
   components: {
-    multipleChoice
+    multipleChoice,
+    taskCenter
   },
   data() {
     return {
       list: [
-        { name: '政治类', id: 1, content: '能反映基层党组织的工作动态、好经验、好做法，找亮点、挖特色、出经验，展现基层党组织基层党组织战斗堡垒作用；宣传共产党员典型先进事迹，弘扬正能量，彰显榜样力量；聚焦新疆儿女屯垦戍边、无私奉献，保家卫国、不怕牺牲，扎根天山、无怨无悔的大无畏革命精神及爱党、爱国、爱家乡的大义情怀。' },
-        { name: '生态类', id: 2, content: '深入一线，在环保中展现国企责任与使命，报道环保科技人员科学研究环境保护取得的成绩、成果；报道新疆各区县践行环保理念，展现环保意识，开展的绿色行动。' },
-        { name: '经济类', id: 3, content: '依托地理、资源、产业、政策等优势，报道新疆经济增长的新变化、新动力；展示新疆各市县“乡村振兴”战略的探索实践，展现“农业强、农村美、农民富”的动人图景；深度推进“旅游兴疆“战略，挖掘旅游的内涵与魅力，展现旅游新形象、新风采，营造出支持旅游、参与旅游、文明旅游的良好氛围。' },
-        { name: '文化类', id: 4, content: '以中华优秀传统文化、革命文化、社会主义先进文化为支撑，宣传报道新疆各地开展“文化润疆“的具体实践，铸牢中华民族共同体意识。' },
-        { name: '社会类', id: 5, content: '宣传报道各地各有关部门着力解决上学、就业、医保、养老等民生问题和人民群众普遍关心的突出问题，宣传党的惠民政策给百姓生活带来的巨大变化，展示人民群众的获得感、幸福感；挖掘身边民族团结人和事，凸显各族人民情同手足、勠力同心、并肩携手的社会氛围。' }
+        { name: '政治新闻', id: 1, content: '是指包括新闻工作者在内的政治传播者通过一定的媒介就新近发生的政治事实向公众进行报道和评述的活动。' },
+        { name: '科技新闻', id: 4, content: '是指科学技术领域新近发生的事实的报道。所谓科技事实可以是科技成果及其推广应用，可以是党和国家的科技政策，也可以是科技工作者的成就、科技界的活动。' },
+        { name: '财经新闻', id: 2, content: '是指覆盖全部社会经济生活和与经济有关的领域，包括从生产到消费、从城市到农村、从宏观到微观、从安全生产到服务质量，从经济工作到政治、社会生活中的相关领域。' },
+        { name: '教育新闻', id: 5, content: '有关教育事业及学校生活的新闻报道。报道内容包括教育方针、新制定的教育法规、政府与人民群众尊师重教的活动、学校生活、教学经验、模范教师和优秀学生的事迹等。' },
+        { name: '民生新闻', id: 3, content: '是指从群众日常生活中采制而来的新闻，内容上锁定群众的生存状况、生存空间，关注群众的冷暖痛痒、喜怒哀乐，提高新闻的时效性和互动性，拉近电视与观众的距离。' }
       ],
 
       multipleList: [],
-      form: {},
       active: '',
-      activeName: '',
-      selectionActive: 0
+      activeName: ''
     }
   },
   mounted() {
@@ -71,20 +58,13 @@ export default {
     this.testList()
   },
   methods: {
-    updateActive(i) {
-      this.selectionActive = i
-    },
-    routerLink() {
-      if (!this.form.title) {
-        return this.$Message.warning('请为新闻选题拟定题目')
-      }
-      this.$store.commit('setGlobalData', { choseSubject: this.active, ...this.form })
-      this.$router.push({ name: 'resourcesPrepare' })
-    },
     testList() {
       getTestList().then(res => {
         this.multipleList = res.data.rows
       })
+    },
+    routerLink() {
+      this.$router.push({ name: 'taskCenter', query: { activeName: this.activeName }})
     }
   }
 }
@@ -114,28 +94,5 @@ export default {
     border: 1px solid #54a0ff;
   }
 }
-.hint-title{
-    width: 560px;
-    height: 50px;
-    color: #666;
-    font-size: 12px;
-    text-align: center;
-    background: #ebf8fe;
-    border-radius: 12px;
-    border: 1px solid #b3e7ff;
-    opacity: 0.98;
-}
 
-  ::v-deep .ivu-input{
-    border-radius: 50px;
-    padding-left: 15px;
-  }
-.boxShadow{
-    height: 100%;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.04);
-    padding: 36px 60px;
-    border: 1px solid #eaedf3;
-}
 </style>

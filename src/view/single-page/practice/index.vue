@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     routerLink() {
-      this.$router.push({ name: 'taskCenter' })
+      this.$router.push({ name: 'topicSelection' })
     },
     lookAnswer() {
       this.submit = true

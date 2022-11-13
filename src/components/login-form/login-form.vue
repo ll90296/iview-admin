@@ -66,6 +66,10 @@ export default {
           })
         }
       })
+    },
+    validate() {
+      this.$refs.loginForm.validate((valid) => {
+      })
     }
   }
 }

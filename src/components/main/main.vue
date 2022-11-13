@@ -33,7 +33,7 @@
           <div v-if="!onOff" class="personal-info" style="position:relative" @click="onOff = !onOff">
             <div class="personal-info-left">
               <i-book-one :fill="['#333' ,'#2d6ac0' ,'#FFF' ,'#43CCF8']" theme="multi-color" size="24"/>
-              <span style="margin-left: 15px;">{{ form.type === 0 ?'新疆财经大学':form.type === 1?form.school:'社会人士' }}</span>
+              <span style="margin-left: 15px;">{{ form.type === 0 ?'山东财经大学':form.type === 1?form.school:'社会人士' }}</span>
             </div>
             <div v-if="!onOff">
               {{ form.name }}
@@ -41,7 +41,7 @@
             </div>
           </div>
           <div v-if="onOff" class="personal-info" style="position:relative">
-            <Card style="width:293px;margin-right:120px;background: #9cb6e6;position:absolute;top:0;left:0;right:0">
+            <Card style="width:293px;margin-right:120px;background: #9cb6e6;position:absolute;top:0;left:0;right:0;z-index:100">
               <p slot="title" @click.prevent="onOff = !onOff">
                 <i-book-one :fill="['#333' ,'#2d6ac0' ,'#FFF' ,'#43CCF8']" theme="multi-color" size="24"/>
                 <span style="margin-left: 15px;">个人信息</span>

@@ -8,6 +8,7 @@
           :data="{ type: 1 }"
           :headers="headers"
           :show-upload-list="false"
+          :before-upload="beforeUpload"
           :on-success="success"
           accept="image/*"
           multiple
@@ -25,6 +26,7 @@
           :data="{ type: 2 }"
           :headers="headers"
           :show-upload-list="false"
+          :before-upload="beforeUpload"
           :on-success="success"
           accept="video/*"
           multiple
@@ -42,6 +44,7 @@
           :data="{ type: 3 }"
           :headers="headers"
           :show-upload-list="false"
+          :before-upload="beforeUpload"
           :on-success="success"
           accept="audio/*"
           multiple
@@ -68,18 +71,21 @@
         </div>
       </Col></Row>
     </Card>
-    <h3>图片素材库</h3>
-    <ZCheckbox v-model="social1" :list="imgList" class="check" />
-    <h3>视频素材库</h3>
+
+    <!-- <Button type="error" class="my-3" @click="remove">删除</Button> -->
+    <h3 class="my-3">图片素材库</h3>
+    <ZCheckbox v-model="social1" :list="imgList" class="check" @remove="remove" />
+    <h3 class="my-3">视频素材库</h3>
     <ZCheckbox
       v-model="social2"
       :show-play="true"
       :list="videoList"
       class="check"
+      @remove="remove"
     />
     <h3>音频素材库</h3>
     <Row :gutter="16" type="flex" justify="start" class="code-row-bg m-20">
-      <Col v-for="item in audioList" :key="item.id" span="2" @click.native="openFile(item)">
+      <Col v-for="item in audioList" :key="item.id" span="2" @click.native="openFile(item)" @contextmenu.native.prevent.right="openMenu($event,item.id)">
       <img
         class="rounded"
         src="https://event.itouchtv.cn/laboratory/images/audio-icon9f9b08e4.png"
@@ -93,7 +99,7 @@
     <h3>文稿素材库</h3>
     <div>
       <Row :gutter="16" type="flex" justify="start" class="code-row-bg">
-        <Col v-for="item in articleList" :key="item.id" span="12">
+        <Col v-for="item in articleList" :key="item.id" class="mb-5" span="12" @contextmenu.native.prevent.right="openMenu($event,item.id)">
         <Card class="card-bg">
           <div style="height: 200px; overflow-y: auto">
             {{ item.url }}
@@ -110,12 +116,21 @@
         <audio :src="$imgUrl(showUrlForm.url)" style="width:100%" controls autoplay />
       </div>
     </Modal>
+
+    <ul
+      v-show="rightMenuVisible"
+      ref="rightMenu"
+      :style="{ left: rightMenuLeft + 'px', top: rightMenuTop + 'px' }"
+      class="contextmenu"
+    >
+      <Button type="error" @click="remove()">删除</Button>
+    </ul>
   </div>
 </template>
 
 <script>
 import ZCheckbox from '@/components/z-checkbox2'
-import { queryFiles, uploadManuscripts } from '@/api/material.js'
+import { queryFiles, uploadManuscripts, deleteFile } from '@/api/material.js'
 import { getToken } from '@/libs/util'
 export default {
   name: 'MaterialUpload',
@@ -129,7 +144,13 @@ export default {
       fileList: [],
       text: '',
       showUrlForm: {},
-      showFile: false
+      showFile: false,
+      uploadLoading: null,
+      uploadCount: 0,
+      rightMenuTop: '',
+      rightMenuLeft: '',
+      rightMenuVisible: false,
+      delId: ''
     }
   },
   computed: {
@@ -157,6 +178,9 @@ export default {
   },
   mounted() {
     this.getQueryFiles()
+    document.addEventListener('click', (e) => {
+      if (this.$refs.rightMenu && !this.$refs.rightMenu.contains(e.target)) { this.rightMenuVisible = false }
+    })
   },
   methods: {
     async getQueryFiles() {
@@ -164,16 +188,57 @@ export default {
       this.fileList = res.data
     },
     success() {
-      this.getQueryFiles()
+      this.uploadCount--
+      if (this.uploadCount === 0) {
+        setTimeout(this.uploadLoading, 0)
+        this.getQueryFiles()
+      }
     },
     submit() {
+      const uploadLoading = this.$Message.loading({
+        content: '上传中...',
+        duration: 0
+      })
       uploadManuscripts({ url: this.text }).then(res => {
+        this.text = ''
+        setTimeout(uploadLoading, 0)
         this.getQueryFiles()
       })
     },
     openFile(item) {
       this.showUrlForm = item
       this.showFile = true
+    },
+
+    beforeUpload() {
+      this.uploadCount++
+      if (!this.uploadLoading) {
+        this.uploadLoading = this.$Message.loading({
+          content: '上传中...',
+          duration: 0
+        })
+      }
+    },
+    openMenu(e, id) {
+      var x = e.pageX
+      var y = e.pageY
+      this.rightMenuTop = y
+      this.rightMenuLeft = x
+      this.delId = id
+      this.rightMenuVisible = true
+    },
+    remove(id) {
+      this.rightMenuVisible = false
+      this.$Modal.confirm({
+        content: '确定要删除吗？',
+        loading: true,
+        onOk: () => {
+          deleteFile({ id: id || this.delId }).then(res => {
+            this.$Modal.remove()
+            this.getQueryFiles()
+          })
+        }
+      })
     }
   }
 }
@@ -197,5 +262,8 @@ h1 {
 }
 h1:nth-of-type(2) {
   margin-bottom: 30px;
+}
+.contextmenu{
+  position: absolute;
 }
 </style>

@@ -84,10 +84,15 @@ export default {
           passWord
         }).then(res => {
           const data = res.data.data
-          commit('setUserName', data.userName)
-          commit('setToken', data.token)
-          commit('setAccess', [data.level])
-          resolve()
+          if (res.data.code === 400) {
+            resolve(res.data.msg)
+          }
+          if (data) {
+            commit('setUserName', data.userName)
+            commit('setToken', data.token)
+            commit('setAccess', [data.level])
+            resolve()
+          }
         }).catch(err => {
           reject(err)
         })

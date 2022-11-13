@@ -11,25 +11,21 @@
     <h3>视频素材库</h3>
     <ZCheckbox v-model="social2" :show-play="true" :list="videoList" class="check" />
     <h3>音频素材库</h3>
-    <Row :gutter="16" type="flex" justify="start" class="code-row-bg m-20">
-      <Col v-for="item in audioList" :key="item.id" span="2" @click.native="openFile(item)">
-      <img
-        class="rounded"
-        src="https://event.itouchtv.cn/laboratory/images/audio-icon9f9b08e4.png"
-        alt=""
-      >
-      <p class="text-sm font-bold text-center" style="font-size:14px">{{ item.fileName }}</p></Col
-      >
-    </Row>
+    <ZCheckbox v-model="social3" :list="audioList" type="audio" class="check" />
     <h3>文稿素材库</h3>
     <div>
       <Row :gutter="16" type="flex" justify="start" class="code-row-bg">
         <Col v-for="item in articleList" :key="item.id" span="12">
-        <Card class="card-bg">
+        <Button
+          class="i-btn i-btn-text py-2 px-4 w-full"
+          @click="setSocial(item)"
+        > <Card class="card-bg">
           <div style="height: 200px; overflow-y: auto">
             {{ item.url }}
           </div>
-        </Card></Col
+        </Card>
+        </Button>
+       </Col
         >
       </Row>
     </div>
@@ -43,14 +39,6 @@
       >使用所选择素材</Button
       >
     </div>
-    <Modal
-      :footer-hide="true"
-      v-model="showFile"
-      :title="showUrlForm.fileName">
-      <div v-if="showFile">
-        <audio :src="$imgUrl(showUrlForm.url)" style="width:100%" controls autoplay />
-      </div>
-    </Modal>
   </div>
 </template>
 
@@ -66,9 +54,9 @@ export default {
     return {
       social1: [],
       social2: [],
-      fileList: [],
-      showFile: false,
-      showUrlForm: {}
+      social3: [],
+      social4: [],
+      fileList: []
     }
   },
   computed: {
@@ -79,13 +67,18 @@ export default {
       return this.fileList.filter(item => item.type === 2)
     },
     audioList() {
-      return this.fileList.filter(item => item.type === 3)
+      let list = []
+      list = this.fileList.filter(item => item.type === 3)
+      list.forEach(item => {
+        item.audioUrl = 'https://event.itouchtv.cn/laboratory/images/audio-icon9f9b08e4.png'
+      })
+      return list
     },
     articleList() {
       return this.fileList.filter(item => item.type === 4)
     },
     btnDisabled() {
-      return !this.social1.length && !this.social2.length
+      return !this.social1.length && !this.social2.length && !this.social3.length && !this.social4.length
     }
   },
   mounted() {
@@ -93,16 +86,15 @@ export default {
   },
   methods: {
     routerLink() {
-      this.$store.commit('setGlobalData', { oneEx: this.social1, twoEx: this.social2 })
+      this.$store.commit('setGlobalData', { oneEx: this.social1, twoEx: this.social2, threeEx: this.social3, fourEx: this.social4 })
       this.$router.push({ name: 'WorkProduction' })
     },
     async getQueryFiles() {
       const res = await queryFiles()
       this.fileList = res.data
     },
-    openFile(item) {
-      this.showUrlForm = item
-      this.showFile = true
+    setSocial(item) {
+      this.social4 = [item]
     }
   }
 }

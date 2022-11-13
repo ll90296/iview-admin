@@ -5,6 +5,14 @@
         <h4 class="font-semibold text-base">审核意见</h4>
       </div>
       <div class="detail-wapper mt-4">
+        <Row class="px-4 py-2">
+          <Col span="2">
+          <p class="font-normal text-lg">题目</p>
+          </Col>
+          <Col span="22">
+          <p class="font-normal text-lg">{{ detail.topic }}</p>
+          </Col>
+        </Row>
         <Row class="px-4">
           <Col span="2">
           <p class="font-normal text-lg">标题</p>

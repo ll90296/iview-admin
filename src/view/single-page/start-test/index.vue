@@ -4,7 +4,7 @@
       style="color: #333;
     font-size: 18px;
     font-weight: 600;
-    margin-bottom: 12px;">您好！欢迎使用新疆财经大学融合创新新闻作品虚拟仿真实验平台。</h3>
+    margin-bottom: 12px;">您好！欢迎使用山东财经大学财经新闻全媒体制作流程虚拟仿真平台。</h3>
     <p>请填写下方信息，并按照平台指引完成实验，下方信息会被自动填写进实验报告中，请谨慎填写。</p>
     <h3
       style="    font-size: 18px;
@@ -39,7 +39,7 @@
       style="width:457px;
     margin: 0 auto;">
       <FormItem label="学校">
-        <p v-if="active==0" style="text-align:left;margin-left:15px">新疆财经大学</p>
+        <p v-if="active==0" style="text-align:left;margin-left:15px">山东财经大学</p>
         <Input v-else v-model="form.school" placeholder="请填写学校名称"></Input>
       </FormItem>
       <FormItem label="学院">
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       cardList: [
-        { url: require('@/assets/images/logo-min.jpg'), name: '新疆财经大学用户' },
+        { url: require('@/assets/images/logo-min.jpg'), name: '山东财经大学用户' },
         { url: require('@/assets/images/logo-min.jpg'), name: '其他高校用户' },
         { url: require('@/assets/images/logo-min.jpg'), name: '社会用户' }
       ],
@@ -94,9 +94,10 @@ export default {
         return this.$Message.error('请填写您的姓名')
       }
       if (this.active === 0) {
-        this.form.school = '新疆财经大学'
+        this.form.school = '山东财经大学'
       }
       const form = {
+        type: this.active,
         ...this.form
       }
       form.type++

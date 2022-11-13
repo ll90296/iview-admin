@@ -59,8 +59,6 @@ export default {
           color: '#2d8cf0',
           route: 'practice'
         },
-        { title: '任务分发', icon: 'md-locate', count: 232, color: '#19be6b',
-          route: 'taskCenter' },
         {
           title: '选题策划',
           icon: 'md-help-circle',
@@ -68,6 +66,8 @@ export default {
           color: '#ff9900',
           route: 'topicSelection'
         },
+        { title: '任务分发', icon: 'md-locate', count: 232, color: '#19be6b',
+          route: 'taskCenter' },
         { title: '资源准备', icon: 'md-share', count: 657, color: '#ed3f14',
           route: 'resourcesPrepare' },
         {

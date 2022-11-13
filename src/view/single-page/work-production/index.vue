@@ -251,6 +251,8 @@
       ref="addData"
       :oneEx="oneEx"
       :twoEx="twoEx"
+      :threeEx="threeEx"
+      :fourEx="fourEx"
       :onlyImg="onlyImg"
       @change="change"
     />
@@ -301,6 +303,12 @@ export default {
     },
     twoEx() {
       return this.$store.state.app.globalData.twoEx
+    },
+    threeEx() {
+      return this.$store.state.app.globalData.threeEx
+    },
+    fourEx() {
+      return this.$store.state.app.globalData.fourEx
     }
   },
   mounted() {
@@ -345,12 +353,12 @@ export default {
           try {
             const form = {
               status: 0,
-              distribute: this.form.distribute.join(','),
               userName: this.$store.state.user.userName,
               releaseTime: new Date().Format('yyyy-MM-dd hh:mm:ss'),
               ...this.form,
               ...this.$store.state.app.globalData
             }
+            form.distribute = this.form.distribute.join(',')
             form.oneEx = form.oneEx.id
             form.twoEx = form.twoEx.id
             form.threeEx = form.threeEx.id

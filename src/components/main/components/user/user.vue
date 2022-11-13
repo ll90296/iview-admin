@@ -43,6 +43,8 @@ export default {
   methods: {
     ...mapActions(['handleLogOut']),
     logout() {
+      this.$store.commit('setPersonalInfo', {})
+      sessionStorage.removeItem('personalInfo')
       Cookies.remove('token')
       this.$router.push({
         name: 'login'

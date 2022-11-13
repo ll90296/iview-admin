@@ -8,7 +8,7 @@
       class-name="vertical-center-modal"
       @on-ok="ok"
     >
-      <Tabs v-model="tabValue">
+      <Tabs v-model="tabValue" @on-click="tabChange">
         <TabPane label="图片素材" name="name1">
           <div
             style="
@@ -27,7 +27,13 @@
                   class="rounded"
                   alt=""
                 ></Button>
-                <p class="text-sm font-bold text-center">
+                <p
+                  :title="item.fileName"
+                  class="text-sm font-bold text-center"
+                  style="overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;">
                   {{ item.fileName }}
                 </p>
               </div>
@@ -55,7 +61,13 @@
                     class="absolute z-10 inset-0 m-auto top-8"
                     type="md-play"
                 /></Button>
-                <p class="text-sm font-bold text-center">
+                <p
+                  :title="item.fileName"
+                  class="text-sm font-bold text-center"
+                  style="overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;">
                   {{ item.fileName }}
                 </p>
               </div>
@@ -81,7 +93,13 @@
                   src="https://event.itouchtv.cn/laboratory/images/audio-icon9f9b08e4.png"
                   alt=""
                 ></Button>
-                <p class="text-sm font-bold text-center">
+                <p
+                  :title="item.fileName"
+                  class="text-sm font-bold text-center"
+                  style="overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;">
                   {{ item.fileName }}
                 </p>
               </div>
@@ -105,13 +123,71 @@
             </Button>
           </div>
         </TabPane>
+        <TabPane v-if="showUpload&&!onlyImg" label="上传素材" name="name5">
+          <Row :gutter="20">
+            <Col span="8">
+            <Upload
+              :action="fileUrl"
+              :data="{ type: 1 }"
+              :headers="headers"
+              :show-upload-list="false"
+              :before-upload="beforeUpload"
+              :on-success="success"
+              accept="image/*"
+              multiple
+              type="drag"
+            >
+              <div style="padding: 20px 0">
+                <Icon type="md-add" size="52" style="color: #ccc" />
+                <p>上传图片</p>
+              </div>
+            </Upload>
+        </Col>
+            <Col span="8">
+            <Upload
+              :action="fileUrl"
+              :data="{ type: 2 }"
+              :headers="headers"
+              :show-upload-list="false"
+              :before-upload="beforeUpload"
+              :on-success="success"
+              accept="video/*"
+              multiple
+              type="drag"
+            >
+              <div style="padding: 20px 0">
+                <Icon type="md-add" size="52" style="color: #ccc" />
+                <p>上传视频</p>
+              </div>
+            </Upload>
+        </Col>
+            <Col span="8">
+            <Upload
+              :action="fileUrl"
+              :data="{ type: 3 }"
+              :headers="headers"
+              :show-upload-list="false"
+              :before-upload="beforeUpload"
+              :on-success="success"
+              accept="audio/*"
+              multiple
+              type="drag"
+            >
+              <div style="padding: 20px 0">
+                <Icon type="md-add" size="52" style="color: #ccc" />
+                <p>上传音频</p>
+              </div>
+            </Upload>
+          </Col></Row>
+        </TabPane>
       </Tabs>
     </Modal>
   </div>
 </template>
 
 <script>
-import { queryFiles } from '@/api/material.js'
+import { queryFiles, queryStudentsFiles } from '@/api/material.js'
+import { getToken } from '@/libs/util'
 export default {
   name: 'Dialog',
   components: {},
@@ -128,6 +204,18 @@ export default {
         return []
       }
     },
+    threeEx: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    fourEx: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
     onlyImg: {
       type: Boolean,
       default: false
@@ -137,26 +225,55 @@ export default {
     return {
       addData: false,
       fileList: [],
+      studentsFileList: [],
       data: {},
-      tabValue: 'name1'
+      tabValue: 'name1',
+      text: '',
+      uploadLoading: null,
+      uploadCount: 0
     }
   },
   computed: {
+    headers() {
+      return { Authorization: getToken() }
+    },
+    fileUrl() {
+      return this.$config.baseUrl.dev + '/files/uploadFile'
+    },
     imgList() {
       return this.oneEx.length && !this.onlyImg
-        ? this.oneEx
-        : this.fileList.filter((item) => item.type === 1)
+        ? [
+          ...this.oneEx,
+          ...this.studentsFileList.filter((item) => item.type === 1)
+        ]
+        : [...this.fileList.filter((item) => item.type === 1), ...this.studentsFileList.filter((item) => item.type === 1)]
     },
     videoList() {
       return this.twoEx.length
-        ? this.twoEx
-        : this.fileList.filter((item) => item.type === 2)
+        ? [
+          ...this.twoEx,
+          ...this.studentsFileList.filter((item) => item.type === 2)
+        ]
+        : [...this.fileList.filter((item) => item.type === 2), ...this.studentsFileList.filter((item) => item.type === 2)]
     },
     audioList() {
-      return this.fileList.filter(item => item.type === 3)
+      return this.threeEx.length
+        ? [
+          ...this.threeEx,
+          ...this.studentsFileList.filter((item) => item.type === 3)
+        ]
+        : [...this.fileList.filter((item) => item.type === 3), ...this.studentsFileList.filter((item) => item.type === 3)]
     },
     articleList() {
-      return this.fileList.filter((item) => item.type === 4)
+      return this.fourEx.length
+        ? [
+          ...this.fourEx,
+          ...this.studentsFileList.filter((item) => item.type === 4)
+        ]
+        : [...this.fileList.filter((item) => item.type === 4), ...this.studentsFileList.filter((item) => item.type === 4)]
+    },
+    showUpload() {
+      return this.$store.state.app.personalInfo.type === 0
     }
   },
   watch: {
@@ -176,15 +293,37 @@ export default {
     open() {
       this.addData = true
     },
+    tabChange() {
+      this.getQueryStudentsFiles()
+    },
     async getQueryFiles() {
       const res = await queryFiles()
       this.fileList = res.data
+    },
+    async getQueryStudentsFiles() {
+      const res = await queryStudentsFiles()
+      this.studentsFileList = res.data
     },
     setId(data) {
       this.data = data
     },
     ok() {
       this.$emit('change', this.data)
+    },
+    beforeUpload() {
+      this.uploadCount++
+      if (!this.uploadLoading) {
+        this.uploadLoading = this.$Message.loading({
+          content: '上传中...',
+          duration: 0
+        })
+      }
+    },
+    success() {
+      this.uploadCount--
+      if (this.uploadCount === 0) {
+        setTimeout(this.uploadLoading, 0)
+      }
     }
   }
 }
