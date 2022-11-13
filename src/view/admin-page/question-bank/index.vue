@@ -16,7 +16,7 @@
       :footer-hide="true"
       title="新增练习题">
       <Form ref="formCustom" :model="form" :rules="ruleValidate">
-        <FormItem label="题号" prop="number">
+        <FormItem label="题号">
           {{ form.number }}
         </FormItem >
         <FormItem label="题目" prop="testName">
@@ -124,9 +124,6 @@ export default {
       },
       showModal: false,
       ruleValidate: {
-        number: [
-          { required: true, message: '不可为空', trigger: 'blur' }
-        ],
         testName: [
           { required: true, message: '不可为空', trigger: 'blur' }
         ],
@@ -160,7 +157,7 @@ export default {
       })
     },
     add() {
-      this.form.number = this.data[this.data.length - 1].number + 1
+      this.form.number = this.data.length === 0 ? 1 : this.data[this.data.length - 1].number + 1
       this.showModal = true
     },
     ok() {
