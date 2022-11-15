@@ -45,7 +45,7 @@ Vue.config.productionTip = false;
  */
 Vue.prototype.$config = config;
 let imgUrl = (imgUrl)=>{
-  return config.baseUrl.dev + '/' + imgUrl
+  return config.baseUrl.pro + '/' + imgUrl
 }
 Vue.prototype.$imgUrl = imgUrl;
 /**
