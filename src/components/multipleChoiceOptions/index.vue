@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Card v-for="item in itemList" :key="item.id" :class="{active:value==item.id,correct:correctError(item.testOptionAnswer),error: correctError(item.testOptionAnswer,item.id)}" class="item" @click.native="select(item.id)">
+    <Card v-for="item in itemList" :key="item.id" :class="{active:value==item.id,correct:correctError(item.testOptionAnswer),error: correctError(item.testOptionAnswer,item.id)}" class="item" @click.native="select(item.id,item.testOptionAnswer,item.testOptionEx)">
       <p>{{ item.testOptionEx }}</p><Icon v-if="correctError(item.testOptionAnswer)" type="md-checkmark" color="#0ec066" class="icon" />
       <Icon v-if="correctError(item.testOptionAnswer,item.id)" type="md-close" color="#ff8e32" class="icon" />
     </Card>
@@ -34,10 +34,11 @@ export default {
         return this.submit && answer
       }
     },
-    select(id) {
+    select(id, testOptionAnswer, testOptionEx) {
       if (this.submit) return
-      console.log(id, 'id')
       this.$emit('input', id)
+      this.$emit('testOptionAnswer', testOptionAnswer)
+      this.$emit('testOptionEx', testOptionEx)
     }
   }
 }

@@ -238,7 +238,7 @@ export default {
       return { Authorization: getToken() }
     },
     fileUrl() {
-      return this.$config.baseUrl.dev + '/files/uploadFile'
+      return this.$config.baseUrl.pro + '/files/uploadFile'
     },
     imgList() {
       return this.oneEx.length && !this.onlyImg
@@ -309,6 +309,7 @@ export default {
     },
     ok() {
       this.$emit('change', this.data)
+      this.data = {}
     },
     beforeUpload() {
       this.uploadCount++

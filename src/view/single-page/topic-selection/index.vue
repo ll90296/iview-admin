@@ -84,10 +84,6 @@ export default {
 <style lang="less" scoped>
 .TopicSelection{
   >div{
-    // column-count: 3;
-    // -moz-column-count:3; /* Firefox */
-    // -webkit-column-count:3; /* Safari and Chrome */
-    // column-gap:40px;
   }
   .icon{
     margin: 20px 0;

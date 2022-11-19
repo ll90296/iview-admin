@@ -55,9 +55,10 @@
                   <p class="text-blue-500 cursor-pointer" @click="toDetail(row.id)">
                     查看
                   </p>
-                  <!-- <p v-if="row.grade" class="ml-4 text-blue-500 cursor-pointer" @click="toDetail">
+
+                  <p v-if="row.status == 1" class="ml-4 text-blue-500 cursor-pointer" @click="toDownloadReport(row.id)">
                     下载报告
-                  </p> -->
+                  </p>
                 </div>
               </template>
             </Table>
@@ -205,6 +206,9 @@ export default {
   methods: {
     toDetail(id) {
       this.$router.push({ name: 'WorkDetail', query: { id, showComments: true }})
+    },
+    toDownloadReport(id) {
+      this.$router.push({ name: 'DownloadReport', query: { id }})
     },
     getList(name) {
       auditList(this.params).then(res => {

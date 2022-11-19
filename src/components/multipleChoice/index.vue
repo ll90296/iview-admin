@@ -1,14 +1,14 @@
 <template>
   <div>
     <h3 class="title">{{ testName }}</h3>
-    <multipleChoiceOptions :item-list="itemList" v-model="active" :submit="submit" />
+    <multipleChoiceOptions :item-list="itemList" v-model="active" :submit="submit" @testOptionAnswer="onanswerCount" @testOptionEx="testOptionEx" />
     <Button v-if="okAnswer" type="primary" shape="circle" style="width:140px;height:44px" @click="completeAnswer">完成答题</Button>
     <Button v-else-if="submit" type="primary" shape="circle" style="width:140px;height:44px" @click="next">下一题</Button>
     <Button v-else :disabled="!active" type="primary" shape="circle" style="width:140px;height:44px" @click="lookAnswer">查看答案</Button>
 
     <div v-if="submit" class="answer">
-      <h3>正确答案: B.</h3>
-      <p>新闻角度是作者落实新闻主题的一种特别方法，是记者动笔写稿的首要一道“工序”，角度选择的好与坏直接影响到新闻报道的成败，故答案选B</p>
+      <h3>正确答案: {{ testOptionAnswer }}.</h3>
+      <p>{{ testEx }}</p>
     </div>
   </div>
 </template>
@@ -35,7 +35,13 @@ export default {
       submit: false,
       page: 0,
       testName: '',
-      okAnswer: false
+      testEx: '',
+      testOptionAnswer: '',
+      okAnswer: false,
+      answer: [],
+      answerCount: [],
+      test: {},
+      testList: []
     }
   },
   computed: {
@@ -54,6 +60,7 @@ export default {
       handler(newVal) {
         if (newVal.length) {
           this.testName = newVal[0].testName
+          this.testEx = newVal[0].testEx
         }
       }
     }
@@ -62,7 +69,24 @@ export default {
     console.log(this.list, 'list')
   },
   methods: {
+    onanswerCount(event) {
+      if (event) {
+        this.answer = event
+      } else {
+        this.answer = null
+      }
+    },
+    testOptionEx(event) {
+      if (event) {
+        this.test = { anwser: event, topic: this.testName }
+      }
+    },
     lookAnswer() {
+      this.answer && this.answerCount.push(this.answer)
+      console.log(this.answer, this.answerCount, 'this.answerCount')
+      this.testList.push(this.test)
+      const testOptionAnswer = this.list[this.page].list.filter(item => item.testOptionAnswer)
+      this.testOptionAnswer = testOptionAnswer.testOption
       if (this.page === this.list.length - 1) {
         this.okAnswer = true
         this.submit = true
@@ -71,12 +95,13 @@ export default {
       this.submit = true
     },
     completeAnswer() {
-      this.$emit('complete')
+      this.$emit('complete', this.answerCount.length, this.testList)
     },
     next() {
       this.active = ''
       this.page++
       this.testName = this.list[this.page].testName
+      this.testEx = this.list[this.page].testEx
       this.submit = false
     }
   }

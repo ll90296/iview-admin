@@ -19,7 +19,8 @@ import '@icon-park/vue/styles/index.css'
 
 import Pagination from '@/components/Pagination/index.js'
 Vue.use(Pagination)
-
+import htmlToPdf from '@/libs/htmlToPdf'
+Vue.use(htmlToPdf)
 import 'tailwindcss/tailwind.css'
 
 import { install } from '@icon-park/vue/es/all'
@@ -45,7 +46,7 @@ Vue.config.productionTip = false;
  */
 Vue.prototype.$config = config;
 let imgUrl = (imgUrl)=>{
-  return config.baseUrl.pro + '/' + imgUrl
+  return config.baseUrl.imgUrl + '/' + imgUrl
 }
 Vue.prototype.$imgUrl = imgUrl;
 /**

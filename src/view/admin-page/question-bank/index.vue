@@ -138,7 +138,7 @@ export default {
   },
   computed: {
     fileUrl() {
-      return this.$config.baseUrl.dev + '/files/uploadFile'
+      return this.$config.baseUrl.pro + '/files/uploadFile'
     }
   },
   mounted() {

@@ -132,7 +132,7 @@
     <Card v-if="$route.query.showComments" class="ml-10" style="width:300px">
       <div class="p-2">
         <h4 class="font-semibold text-base pb-4 mb-4" style="border-bottom:1px solid #f0f3f8">实验评价</h4>
-        <p><span class="font-semibold">选题：</span> 思想突出，反映社会和时代亮点，激发用户的关注度。</p>
+        <p><span class="font-semibold">选题价值：</span> 具备一定新闻价值，体现时代特征，主题重大，反映社会问题，激发用户的关注度。</p>
         <RadioGroup
           v-model="workesDetail.selectedScore"
           class="py-5"
@@ -145,7 +145,7 @@
           <Radio :label="5" disabled/>
           <Radio :label="0" disabled/>
         </RadioGroup>
-        <p><span class="font-semibold">事实的选择：</span> 突出新闻价值，具有客观、具体、真实特点，以点带面，可以成为用户关注的焦点。</p>
+        <p><span class="font-semibold">专业性：</span> 对新闻主题采访到位、素材收集全面、完整，具有客观性和真实性。</p>
         <RadioGroup
           v-model="workesDetail.choiceScore"
           class="py-5"
@@ -158,7 +158,7 @@
           <Radio :label="5" disabled/>
           <Radio :label="0" disabled/>
         </RadioGroup>
-        <p><span class="font-semibold">事实的认识与把握：</span>  新闻事实表现一定主题思想，视角独特。</p>
+        <p><span class="font-semibold">思想性：</span> 关注社会热点并分析报道社会问题，文字洗练，现场感强，思想性强。</p>
         <RadioGroup
           v-model="workesDetail.cognitionScore"
           class="py-5"
@@ -171,9 +171,22 @@
           <Radio :label="5" disabled/>
           <Radio :label="0" disabled/>
         </RadioGroup>
-        <p><span class="font-semibold">事实的反映与表现：</span>  结构合理，评述结合，运用多种媒介元素符号组合报道，具有较强的可分享性。</p>
+        <p><span class="font-semibold">融合性：</span> 运用多种媒介元素符号组合报道，具有较强的话题性和分享性。</p>
         <RadioGroup
           v-model="workesDetail.reflectScore"
+          class="py-5"
+          style="    width: 100%;
+    display: flex;
+    justify-content: space-between;">
+          <Radio :label="20" disabled/>
+          <Radio :label="15" disabled/>
+          <Radio :label="10" disabled/>
+          <Radio :label="5" disabled/>
+          <Radio :label="0" disabled/>
+        </RadioGroup>
+        <p><span class="font-semibold">创新性：</span> 立意、内容、技术、传播等方面均大胆探索、积极创新。</p>
+        <RadioGroup
+          v-model="workesDetail.novelty"
           class="py-5"
           style="    width: 100%;
     display: flex;

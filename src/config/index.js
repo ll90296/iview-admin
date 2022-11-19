@@ -18,7 +18,9 @@ export default {
    */
   baseUrl: {
     dev: 'http://xhk.free.svipss.top',
-    pro: 'http://192.168.124.129:7788'
+    pro: 'http://202.194.252.178:7788',
+    // imgUrl: 'http://202.194.252.178:7006'
+    imgUrl: 'http://xhk.free.svipss.top'
   },
   base: '/aoxinwechat/',
   /**

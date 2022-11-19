@@ -5,6 +5,9 @@
         <FormItem label="标题" class="text-lg" prop="title">
           <Input v-model="form.title" placeholder="内容不能为空"></Input>
         </FormItem>
+        <FormItem label="实验目的" class="text-lg" prop="aim">
+          <i-input v-model="form.aim" :rows="4" type="textarea" placeholder="内容不能为空" /></i-input>
+        </FormItem>
         <FormItem label="正文" class="text-lg">
           <div v-if="form.oneEx" @click="openDialog(1)">
             <div style="padding: 20px 0">
@@ -289,6 +292,9 @@ export default {
         title: [
           { required: true, message: '请输入标题', trigger: 'blur' }
         ],
+        aim: [
+          { required: true, message: '请输入实验目的', trigger: 'blur' }
+        ],
         distribute: [
           { required: true, validator: validate, trigger: 'blur' }
         ]
@@ -326,24 +332,26 @@ export default {
       this.$refs.addData.open()
     },
     change(data) {
-      switch (this.fileType) {
-        case 1:
-          this.form.oneEx = data
-          break
-        case 2:
-          this.form.twoEx = data
-          break
-        case 3:
-          this.form.threeEx = data
-          break
-        case 4:
-          this.form.fourEx = data
-          break
-        case 5:
-          this.form.cover = data
-          break
-        default:
-          break
+      if (data.id) {
+        switch (this.fileType) {
+          case 1:
+            this.form.oneEx = data
+            break
+          case 2:
+            this.form.twoEx = data
+            break
+          case 3:
+            this.form.threeEx = data
+            break
+          case 4:
+            this.form.fourEx = data
+            break
+          case 5:
+            this.form.cover = data
+            break
+          default:
+            break
+        }
       }
     },
     submit() {

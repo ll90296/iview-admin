@@ -50,7 +50,8 @@ export default {
   },
   methods: {
     routerLink() {
-      this.$store.commit('setGlobalData', { voice: this.social1.join('、'), picture: this.social2.join('、'), video: this.social3.join('、') })
+      const softwareCount = this.social1.length + this.social2.length + this.social3.length
+      this.$store.commit('setGlobalData', { voice: this.social1.join('、'), picture: this.social2.join('、'), video: this.social3.join('、'), softwareCount })
       this.$router.push({ name: 'materialPrepare' })
     },
     lookAnswer() {

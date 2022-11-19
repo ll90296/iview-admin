@@ -155,7 +155,7 @@ export default {
   },
   computed: {
     fileUrl() {
-      return this.$config.baseUrl.dev + '/files/uploadFile'
+      return this.$config.baseUrl.pro + '/files/uploadFile'
     },
     imgList() {
       return this.fileList.filter((item) => item.type === 1)
