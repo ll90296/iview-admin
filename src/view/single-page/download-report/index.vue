@@ -46,8 +46,7 @@
                   <span>{{ item.anwser }}</span>
                 </li>
               </ul>
-              <p>选题上报。选择{{ getChoseSubject(detail.choseSubject) }}，新闻价值选择正确，拟定新闻题目《悄然
-              兴起的“儿童剧本杀”，是风口还是危机？》。</p>
+              <p>选题上报。选择{{ getChoseSubject(detail.choseSubject) }}，新闻价值选择正确，拟定新闻题目{{ detail.topic }}。</p>
               <p>资源准备。共选择 {{ detail.softwareCount }} 个操作工具:{{ detail.tools }}</p>
               <p>素材准备。共选用 {{ detail.matterCount }} 条正确素材。</p>
               <p>作品生产。分发平台包括 {{ detail.distribute }}。
