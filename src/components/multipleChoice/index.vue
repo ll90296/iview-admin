@@ -78,7 +78,7 @@ export default {
     },
     testOptionEx(event) {
       if (event) {
-        this.test = { anwser: event, topic: this.testName }
+        this.test = { anwser: event, topic: this.testName, number: this.list[this.page].number }
       }
     },
     lookAnswer() {

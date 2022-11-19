@@ -247,7 +247,8 @@ export default {
         selectedScore: '',
         cognitionScore: '',
         choiceScore: '',
-        reflectScore: ''
+        reflectScore: '',
+        novelty: ''
       },
       Group: 20,
       content: '',
@@ -259,7 +260,7 @@ export default {
       return this.$route.query.type
     },
     totalScore() {
-      return Number(this.form.selectedScore) + Number(this.form.cognitionScore) + Number(this.form.choiceScore) + Number(this.form.reflectScore)
+      return Number(this.form.selectedScore) + Number(this.form.cognitionScore) + Number(this.form.choiceScore) + Number(this.form.reflectScore) + Number(this.form.novelty)
     }
   },
   watch() {

@@ -43,7 +43,7 @@
               <ul>
                 <li v-for="item in detail.testList" :key="item.topic">
                   <span>{{ item.topic }}</span>
-                  <span>{{ item.answer }}</span>
+                  <span>{{ item.anwser }}</span>
                 </li>
               </ul>
               <p>选题上报。选择{{ getChoseSubject(detail.choseSubject) }}，新闻价值选择正确，拟定新闻题目《悄然
