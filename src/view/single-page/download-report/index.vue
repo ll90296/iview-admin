@@ -40,17 +40,17 @@
           </div>
           <div class="row5">
             <span class="much_total">实验内容与步骤</span> <span>
+              <p>一、课前练习。共 {{ detail.topicCount }} 题，答对 {{ detail.answerCount }} 题。</p>
               <ul>
                 <li v-for="item in detail.testList" :key="item.topic">
                   <span>{{ item.topic }}</span>
                   <span>{{ item.anwser }}</span>
                 </li>
               </ul>
-              <p>选题上报。选择{{ getChoseSubject(detail.choseSubject) }}，新闻价值选择正确，拟定新闻题目{{ detail.topic }}。</p>
-              <p>资源准备。共选择 {{ detail.softwareCount }} 个操作工具:{{ detail.tools }}</p>
-              <p>素材准备。共选用 {{ detail.matterCount }} 条正确素材。</p>
-              <p>作品生产。分发平台包括 {{ detail.distribute }}。
-              </p>
+              <p>二、选题上报。选择{{ getChoseSubject(detail.choseSubject) }}，新闻价值选择正确，拟定新闻题目{{ detail.topic }}。</p>
+              <p>三、资源准备。共选择 {{ detail.softwareCount }} 个操作工具:{{ detail.tools }}</p>
+              <p>四、素材准备。共选用 {{ detail.matterCount }} 条正确素材。</p>
+              <p>五、作品生产。分发平台包括 {{ detail.distribute }}。</p>
             </span>
           </div>
           <div class="row5">
