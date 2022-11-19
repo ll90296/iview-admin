@@ -38,13 +38,8 @@ export default {
     this.testList()
   },
   methods: {
-    routerLink(answerCount) {
-      this.$store.commit('setGlobalData', { answerCount, topicCount: this.list.length, testList: this.list.map(item => {
-        return {
-          topic: item.testName,
-          anwser: item.testEx
-        }
-      }) })
+    routerLink(answerCount, testList) {
+      this.$store.commit('setGlobalData', { answerCount, topicCount: this.list.length, testList })
       this.$router.push({ name: 'topicSelection' })
     },
     lookAnswer() {

@@ -75,6 +75,7 @@ export default {
       })
     },
     routerLink() {
+      this.$store.commit('setGlobalData', { choseSubject: this.active })
       this.$router.push({ name: 'taskCenter', query: { activeName: this.activeName }})
     }
   }

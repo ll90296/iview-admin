@@ -34,11 +34,12 @@ export default {
         return this.submit && answer
       }
     },
-    select(id, testOptionAnswer, testOptionEx) {
+    select(id, testOptionAnswer) {
       if (this.submit) return
       this.$emit('input', id)
       this.$emit('testOptionAnswer', testOptionAnswer)
-      this.$emit('testOptionEx', testOptionEx)
+      const testOptionEx = this.itemList.filter(item => item.testOptionAnswer)
+      this.$emit('testOptionEx', testOptionEx[0].testOptionEx)
     }
   }
 }
